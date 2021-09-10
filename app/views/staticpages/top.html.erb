@@ -1,2 +1,38 @@
-<h1>Staticpages#top</h1>
-<p>Find me in app/views/staticpages/top.html.erb</p>
+<div class="h-100 d-flex justify-content-center">
+  <%= image_tag 'hero.png', class: 'img-responsive px-0 w-100 h-100', alt: 'image' %>
+</div>
+<div class="container mb-5">
+  <ul >
+    <li class="row d-flex align-items-center my-0 w-auto">
+      <div class="col-lg-4 d-flex justify-content-center p-0">
+        <%= image_tag 'pic01.png', size: '320x330', alt: '01', class: 'img-responsive' %>
+      </div>
+      <div class="col-lg-6 p-0">
+        <h2 class="border-bottom border-dark mb-4 pb-2 font-weight-bold">家計簿</h2>
+        <p>レシート撮影・固定費設定で簡単入力<br>続く家計簿に。</p>
+      </div>
+    </li>
+    <li class="row d-flex align-items-center flex-row-reverse my-0 ">
+      <div class="col-lg-4 d-flex justify-content-center p-0">
+        <%= image_tag 'pic02.png', size: '280x280', alt: '02', class: 'img-responsive' %>
+      </div>
+      <div class="col-lg-6 text-right p-0">
+        <h2 class="border-bottom border-dark mb-4 pb-2 font-weight-bold">グラフで分析</h2>
+        <p>一眼でわかる家計の現状。<br>家計管理をもっとしやすく。</p>
+      </div>
+    </li>
+    <li class="row d-flex align-items-center my-0">
+      <div class="col-lg-4 d-flex justify-content-center p-0">
+        <%= image_tag 'pic03.png', size: '330x300', alt: '03', class: 'img-responsive' %>
+      </div>
+      <div class="col-lg-6 p-0">
+        <h2 class="border-bottom border-dark mb-4 pb-2 font-weight-bold">みんなのお金事情</h2>
+        <p>気になる世間の家計事情。<br>家族構成や職業別などに合わせて見える化！</p>
+      </div>
+    </li>
+  </ul>
+</div>
+<footer class="d-flex, justify-content-center">
+  <%= image_tag 'city_long.png', alt: 'footer', class: 'img-responsive w-100' %>
+</footer>
+

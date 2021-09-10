@@ -1,0 +1,24 @@
+<nav class="navbar nav sticky-top navbar-expand-lg navbar-light bg-white">
+  <div class="container-fluid">
+    <%= link_to image_tag("logo.png", size: '170x50', alt: 'マネまねロゴ', class: 'img-responsive'), '/'  %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <% if logged_in? %>
+      <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
+        <ul class="navbar-nav ">
+          <li><%= link_to '家計簿', '#', class: 'text-decoration-none text-secondary'%></li>
+          <li><%= link_to 'みんなの平均', '#', class: 'text-decoration-none text-secondary'%></li>
+          <li><%= link_to '目標', '#', class: 'text-decoration-none text-secondary'%></li>
+          <li></li>
+        </ul>
+      </div>
+    <% else %>
+      <div class="col-md-3 d-flex justify-content-center text-end">
+          <button type="button" class="btn btn-dark mr-3"><%= link_to 'ログイン', login_path, class: 'text-decoration-none text-white'%></button>
+          <button type="button" class="btn btn-warning "><%= link_to '新規登録', signup_path, class: 'text-decoration-none text-dark'%></button>
+      </div>
+    <% end %>
+  </div>
+</nav>
+  

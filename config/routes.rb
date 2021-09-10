@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  root to: 'staticpages#top', as: 'top'
+  get '/about', to: 'staticpages#about', as: 'about'
   get 'users/signup', to: 'users#new', as: 'signup'
-  get 'staticpages/top'
-  get 'staticpages/about'
-  resources :users, only: [:index, :show, :create, :edit, :update, :destroy]
+  get    'login', to: 'sessions#new'
+  post   'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
+  resources :users, except: [:new]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
