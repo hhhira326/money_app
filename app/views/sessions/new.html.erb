@@ -3,10 +3,10 @@
     <div class="card-header font-weight-bold">ログイン</div>
     <div class="card-body d-flex justify-content-center">
       <div class="col-md-7  p-0">
-        <%= form_for(:session, url: login_path) do |f| %>
+        <%= form_for(:session, url: login_create_path) do |f| %>
 
           <%= f.label :'メールアドレス', class: 'mt-5 small' %>
-          <%= f.email_field :email, class: 'form-control form-control-sm', name: 'email' %>
+          <%= f.email_field :email, class: 'form-control form-control-sm' %>
 
           <%= f.label :'パスワード', class: 'mt-4 small' %>
           <%= f.password_field :password, class: 'form-control form-control-sm' %>
@@ -18,7 +18,7 @@
             <% end %>
           </p>
         <% end %>
-        <p class="small mt-2 mb-0 text-center"><%= link_to '新規登録へ', signup_path, class: 'text-secondary' %></p>
+        <p class="small mt-2 mb-0 text-center"><%= link_to '初めての方はこちら', signup_path, class: 'text-secondary' %></p>
       </div>
     </div>
   </div>

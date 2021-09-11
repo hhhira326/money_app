@@ -1,10 +1,18 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only[:edit, :update, :destroy]
+  before_action :logged_in_user, only: [:edit, :update, :destroy]
 
   def new
     @user = User.new
   end
 
+  def new_detail
+    @user = User.new
+  end
+
+  def datail_create
+    @user = User.new(user_params)
+  end
+  
   def create
     @user = User.new(user_params)
     if @user.save
@@ -33,6 +41,6 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :age, :job, :sex, :family, :prefucture_id, :city, :other_address, :img, :rent, :income, :password_figes)
+      params.require(:user).permit(:name, :email, :age, :job, :sex, :family, :prefecture_id, :city, :address, :img, :rent, :income, :password_digest)
     end
 end

@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="card col-md-7 p-0 mt-5">
+    <div class="card-header font-weight-bold">基本情報登録</div>
+    <div class="card-body ">
+        <%= form_for(@user) do |f| %>
+          
+            <div class="d-flex flex-row">
+              <div class="col-md-6">
+                <%= f.label :'名前', class: 'mt-4 small' %>
+                <%= f.text_field :name, class: 'form-control form-control-sm' %>
+                <%= f.label :'年齢', class: 'mt-4 small'%>
+                <%= f.number_field :age, class: 'form-control form-control-sm' %>
+                <%= f.label :'性別', class: 'mt-4 small' %><br>
+                <%= f.radio_button :sex, "男", class: 'mr-2' %>男 <%= f.radio_button :sex, "女", class: 'mr-2' %>女<br>
+                <%= f.label :'地域', class: 'mt-4 small' %>
+                <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"} ) %>
+              </div>
+              <div class="col-md-6">
+                <%= f.label :'仕事', class: 'mt-4 small' %><br>
+                <%= f.select :job, [ ["事務",1], ["技術・専門", 2], ["IT", 3 ] ,["営業", 4], ["企画", 5], ["クリエイティブ", 6], ["販売", 7], ["サービス", 8], ["建築・土木", 9], ["医療・福祉", 10], ["公務員", 11], ["自営業・フリーランス", 12], ["フリーター", 13], ["学生", 14], ["主婦", 15], ["その他", 16] ], prompt: "職業を選択してください", class: 'form-control' %><br>
+
+                <%= f.label :'世帯人数', class: 'mt-4 small' %>
+                <%= f.number_field :family, class: 'form-control form-control-sm' %>
+                <%= f.label :'年収', class: 'mt-4 small' %>
+                <%= f.number_field :income, class: 'form-control form-control-sm' %>
+                <%= f.label :'家賃', class: 'mt-4 small' %>
+                <%= f.number_field :rent, class: 'form-control form-control-sm' %>
+              </div>
+            </div>
+         
+      
+          <p class="d-flex flex-column align-items-center ">
+            <%= f.submit "登録", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
+          </p>
+        <% end %>
+        <p class="small mt-2 mb-0 text-center"><%= link_to 'スキップ', login_path, class: 'text-secondary' %></p>
+    </div>
+  </div>
+</div>
+

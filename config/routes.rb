@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   root to: 'staticpages#top', as: 'top'
-  get '/about', to: 'staticpages#about', as: 'about'
-  get 'users/signup', to: 'users#new', as: 'signup'
-  get    'login', to: 'sessions#new'
-  post   'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
+  get 'signup', to: 'users#new', as: 'signup'
+  post 'signup', to: 'users#create', as: 'signup_create'
+  get 'signup/detail', to: 'users#new_detail', as: 'detail'
+  post 'signup_detail', to: 'users#datail_create', as: 'detail_create'
+  get    'login', to: 'sessions#new', as: 'login'
+  post   'login', to: 'sessions#create', as: 'login_create'
+  delete 'logout', to: 'sessions#destroy', as: 'login_destroy'
   resources :users, except: [:new]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

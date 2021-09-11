@@ -1,9 +1,9 @@
 class User < ApplicationRecord
-  atter_accessor :remember_token
+  attr_accessor :remember_token
   has_secure_password
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :prefecture
-  mount_uploader :avatar, AvatarUploder
+  mount_uploader :avatar, AvatarUploader
   
   def self.new_token
     SecureRandom.urlsafe_base64
@@ -21,6 +21,7 @@ class User < ApplicationRecord
   end
 
   def authenticated?(remember_token)
+    return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
