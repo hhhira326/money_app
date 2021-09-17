@@ -11,8 +11,16 @@
 
   <body>
     
-      <%= render 'layouts/header' %>
+      <%= render partial:'layouts/header' %>
+      <div class="d-flex justify-content-center">
+        <div class="w-25">
+          <% flash.each do |message_type, message| %>
+            <div class="text-center alert alert-<%= message_type %>"><%= message %></div>
+          <% end %>
+        </div>
+      </div>
       <%= yield %>
+
 
   </body>
 </html>

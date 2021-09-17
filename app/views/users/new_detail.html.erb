@@ -4,27 +4,29 @@
     <div class="card-body ">
         <%= form_for(@user) do |f| %>
           
-            <div class="d-flex flex-row">
-              <div class="col-md-6">
-                <%= f.label :'名前', class: 'mt-4 small' %>
-                <%= f.text_field :name, class: 'form-control form-control-sm' %>
-                <%= f.label :'年齢', class: 'mt-4 small'%>
-                <%= f.number_field :age, class: 'form-control form-control-sm' %>
-                <%= f.label :'性別', class: 'mt-4 small' %><br>
-                <%= f.radio_button :sex, "男", class: 'mr-2' %>男 <%= f.radio_button :sex, "女", class: 'mr-2' %>女<br>
-                <%= f.label :'地域', class: 'mt-4 small' %>
-                <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"} ) %>
+            <div class="d-flex">
+              <div class="col-md-6 d-flex justify-content-end">
+                <div>
+                  <%= f.label :'名前：', class: 'mt-4 small' %>
+                  <%= f.text_field :name, class: 'h6' %><br>
+                  <%= f.label :'年齢：', class: 'mt-4 small'%>
+                  <%= f.text_field :age, size: "5", class: 'h6'%> 歳<br>
+                  <%= f.label :'性別：', class: 'mt-4 small' %>
+                  <%= f.radio_button :sex, "男", class: 'mr-2' %>男 <%= f.radio_button :sex, "女", class: 'mr-2' %>女<br>
+                  <%= f.label :'地域：', class: 'mt-4 small' %>
+                  <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"} ) %>
+                </div>
               </div>
               <div class="col-md-6">
-                <%= f.label :'仕事', class: 'mt-4 small' %><br>
-                <%= f.select :job, [ ["事務",1], ["技術・専門", 2], ["IT", 3 ] ,["営業", 4], ["企画", 5], ["クリエイティブ", 6], ["販売", 7], ["サービス", 8], ["建築・土木", 9], ["医療・福祉", 10], ["公務員", 11], ["自営業・フリーランス", 12], ["フリーター", 13], ["学生", 14], ["主婦", 15], ["その他", 16] ], prompt: "職業を選択してください", class: 'form-control' %><br>
+                <%= f.label :'仕事：', class: 'mt-4 small' %>
+                <%= f.select :job, [ ["事務"], ["技術・専門"], ["IT"] ,["営業"], ["企画"], ["クリエイティブ"], ["販売"], ["サービス"], ["建築・土木"], ["医療・福祉"], ["公務員"], ["自営業・フリーランス"], ["フリーター"], ["学生"], ["主婦"], ["その他"] ], prompt: "---", class: 'form-control' %><br>
 
-                <%= f.label :'世帯人数', class: 'mt-4 small' %>
-                <%= f.number_field :family, class: 'form-control form-control-sm' %>
-                <%= f.label :'年収', class: 'mt-4 small' %>
-                <%= f.number_field :income, class: 'form-control form-control-sm' %>
-                <%= f.label :'家賃', class: 'mt-4 small' %>
-                <%= f.number_field :rent, class: 'form-control form-control-sm' %>
+                <%= f.label :'世帯人数：', class: 'mt-4 small' %>
+                <%= f.select :family, [ ["1人"], ["2人"], ["3人"] ,["4人"], ["5人"], ["6人"], ["7人以上"] ], prompt: "---", class: 'form-control' %><br>
+                <%= f.label :'年収：', class: 'mt-4 small' %>
+                <%= f.text_field :income, size: "5", class: 'h6' %> 万<br>
+                <%= f.label :'家賃：', class: 'mt-4 small' %>
+                <%= f.text_field :rent, size: "5", class: 'h6'%> 万
               </div>
             </div>
          
@@ -33,8 +35,7 @@
             <%= f.submit "登録", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
           </p>
         <% end %>
-        <p class="small mt-2 mb-0 text-center"><%= link_to 'スキップ', login_path, class: 'text-secondary' %></p>
+        <p class="small mt-2 mb-0 text-center"><%= link_to 'スキップ', user_path(@user), class: 'text-secondary' %></p>
     </div>
   </div>
 </div>
-

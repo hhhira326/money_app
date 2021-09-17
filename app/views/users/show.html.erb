@@ -1,2 +1,45 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="container d-flex">
+  <div class="col-md-7">
+    <div class="mt-4 d-flex justify-content-center">
+      <div>
+        <%= image_tag @user.avatar.url, size: '250x250', class: 'user-icon' %>
+      </div>
+      <div class="align-self-center ml-4">
+        <h1><%= @user.name %></h1>
+        <%= @user.email %>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-header font-weight-bold text-center p-1">カテゴリ</div>
+      <div class="card-body ">
+      </div>
+    </div>
+    <div class="card mt-1">
+      <div class="card-header font-weight-bold text-center p-1">固定費</div>
+      <div class="card-body ">
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-5">
+    <div class="card mt-5">
+      <div class="card-header font-weight-bold text-center">基本情報</div>
+      <div class="card-body">
+        <ul class="mb-0">
+          <li>年齢：<%= @user.age %>歳</li>
+          <li>性別：<%= @user.sex %></li>
+          <li>地域：<%= @user.prefecture.name %></li>
+          <li>仕事：<%= @user.job %></li>
+          <li>世帯人数：<%= @user.family %></li>
+          <li>年収：<%= @user.income %>万</li>
+          <li class="mb-0">家賃：<%= @user.rent %>万</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="btn d-flex justify-content-end mt-3 mr-5">
+  <button type="button" class="btn btn-warning px-4 mr-3"><%= link_to '変更', edit_user_path, class: 'text-decoration-none text-dark'%></button>
+  <button type="button" class="btn btn-light"><%= link_to 'ログアウト', logout_path, method: 'delete', class: 'text-decoration-none text-dark'%></button>
+</div>
+

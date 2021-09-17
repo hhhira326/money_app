@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 2021_09_03_045722) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.integer "age"
+    t.string "age"
     t.string "job"
     t.string "sex"
-    t.integer "family"
+    t.string "family"
     t.string "address"
     t.string "img"
     t.integer "rent"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_09_03_045722) do
     t.string "password_digest"
     t.string "avatar"
     t.string "remember_digest"
+    t.integer "prefecture_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

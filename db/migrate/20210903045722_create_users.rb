@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.integer :age
       t.string :job
       t.string :sex
-      t.integer :family
+      t.string :family
       t.string :address
       t.string :img
       t.integer :rent
@@ -14,6 +14,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :password_digest
       t.string :avatar
       t.string :remember_digest
+      t.integer :prefecture_id
 
       t.timestamps
     end

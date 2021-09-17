@@ -30,4 +30,8 @@ class User < ApplicationRecord
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
+
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
 end

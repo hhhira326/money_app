@@ -6,11 +6,11 @@
     </button>
     <% if logged_in? %>
       <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
-        <ul class="navbar-nav ">
-          <li><%= link_to '家計簿', '#', class: 'text-decoration-none text-secondary'%></li>
-          <li><%= link_to 'みんなの平均', '#', class: 'text-decoration-none text-secondary'%></li>
-          <li><%= link_to '目標', '#', class: 'text-decoration-none text-secondary'%></li>
-          <li></li>
+        <ul class="navbar-nav">
+          <li><%= link_to '家計簿', '#', class: 'text-decoration-none text-secondary mr-4'%></li>
+          <li><%= link_to 'みんなの平均', '#', class: 'text-decoration-none text-secondary mr-4'%></li>
+          <li><%= link_to '目標', '#', class: 'text-decoration-none text-secondary mr-4'%></li>
+          <li><%= link_to 'ユーザー', user_path(current_user), class: 'text-decoration-none text-secondary mr-4'%></li>
         </ul>
       </div>
     <% else %>

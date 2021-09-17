@@ -12,10 +12,10 @@
           <%= f.password_field :password, class: 'form-control form-control-sm' %>
 
           <%= f.label :'パスワード確認', class: 'mt-4 small' %>
-          <%= f.password_field :password, class: 'form-control form-control-sm' %>
+          <%= f.password_field :password_confirmation, class: 'form-control form-control-sm' %>
 
           <p class="d-flex flex-column align-items-center ">
-            <%= f.submit "新規会員登録", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
+            <%= f.submit "新規会員登録", class: 'btn btn-warning mt-5 btn-lg w-50' %>
           </p>
         <% end %>
         <p class="small mt-2 mb-0 text-center"><%= link_to 'ログインはこちら', login_path, class: 'text-secondary' %></p>
