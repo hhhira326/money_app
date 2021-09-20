@@ -1,0 +1,24 @@
+<div class="input-container d-flex justify-content-center">
+  <div class="col-md-7 p-0 mt-5">
+    <div class="input_item">
+      <ul class="nav nav-tabs justify-content-center text-center nav-pills">
+        <li class="nav-item w-50">
+          <a href="#income" class="nav-link active " data-toggle="tab" >収入</a>
+        </li>
+        <li class="nav-item w-50">
+          <a href="#expense" class="nav-link" data-toggle="tab">支出</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="income">
+          <%= form_for(@money) do |f| %>
+
+          <% end %>
+        </div>
+        <div class="tab-pane" id="expense">
+          <p>expense</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

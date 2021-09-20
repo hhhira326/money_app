@@ -42,7 +42,7 @@
               <li><%= f.label :'地域：' %>
               <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"} ) %></li>
               <li><%= f.label :'仕事：' %>
-              <%= f.select :job, [ ["事務"], ["技術・専門"], ["IT"] ,["営業"], ["企画"], ["クリエイティブ"], ["販売"], ["サービス"], ["建築・土木"], ["医療・福祉"], ["公務員"], ["自営業・フリーランス"], ["フリーター"], ["学生"], ["主婦"], ["その他"] ], prompt: "---", class: 'form-control' %></li>
+              <%= f.collection_select(:job_id, Job.all, :id, :name, {include_blank: "---"} ) %></li>
 
               <li><%= f.label :'世帯人数：' %>
               <%= f.select :family, [ ["1人"], ["2人"], ["3人"] ,["4人"], ["5人"], ["6人"], ["7人以上"]], prompt: "---", class: 'form-control' %></li>

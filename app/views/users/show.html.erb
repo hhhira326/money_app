@@ -2,7 +2,7 @@
   <div class="col-md-7">
     <div class="mt-4 d-flex justify-content-center">
       <div>
-        <%= image_tag @user.avatar.url, size: '250x250', class: 'user-icon' %>
+        <%= image_tag @user.avatar&.url, size: '250x250', class: 'user-icon' %>
       </div>
       <div class="align-self-center ml-4">
         <h1><%= @user.name %></h1>
@@ -28,8 +28,8 @@
         <ul class="mb-0">
           <li>年齢：<%= @user.age %>歳</li>
           <li>性別：<%= @user.sex %></li>
-          <li>地域：<%= @user.prefecture.name %></li>
-          <li>仕事：<%= @user.job %></li>
+          <li>地域：<%= @user.prefecture&.name %></li>
+          <li>仕事：<%= @user.job&.name %></li>
           <li>世帯人数：<%= @user.family %></li>
           <li>年収：<%= @user.income %>万</li>
           <li class="mb-0">家賃：<%= @user.rent %>万</li>
@@ -40,6 +40,7 @@
 </div>
 <div class="btn d-flex justify-content-end mt-3 mr-5">
   <button type="button" class="btn btn-warning px-4 mr-3"><%= link_to '変更', edit_user_path, class: 'text-decoration-none text-dark'%></button>
-  <button type="button" class="btn btn-light"><%= link_to 'ログアウト', logout_path, method: 'delete', class: 'text-decoration-none text-dark'%></button>
+  <button type="button" class="btn btn-light mr-5 px-1"><%= link_to 'ログアウト', logout_path, method: 'delete', class: 'text-decoration-none text-dark'%></button>
+  <button type="button" class="btn btn-light ml-5"><%= link_to '退会', unsubscribe_path, class: 'h6 text-decoration-none text-dark'%></button>
 </div>
 

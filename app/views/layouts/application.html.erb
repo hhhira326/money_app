@@ -10,17 +10,21 @@
   </head>
 
   <body>
-    
-      <%= render partial:'layouts/header' %>
-      <div class="d-flex justify-content-center">
-        <div class="w-25">
-          <% flash.each do |message_type, message| %>
-            <div class="text-center alert alert-<%= message_type %>"><%= message %></div>
-          <% end %>
-        </div>
+  
+    <%= render partial:'layouts/header' %>
+    <div class="d-flex justify-content-center">
+      <div class="flash-message w-25">
+        <% flash.each do |message_type, message| %>
+          <div class="text-center alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
       </div>
-      <%= yield %>
+    </div>
+    <%= yield %>
 
+    <script>
+      $(function(){
+        $('.flash-message').fadeOut(2000); });
+    </script>
 
   </body>
 </html>

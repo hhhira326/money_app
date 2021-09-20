@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   attr_accessor :remember_token
+  has_many :money
   has_secure_password
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :prefecture
+  belongs_to :job
   mount_uploader :avatar, AvatarUploader
   
   def self.new_token

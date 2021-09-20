@@ -10,23 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_03_045722) do
+ActiveRecord::Schema.define(version: 2021_09_18_151519) do
+
+  create_table "money", force: :cascade do |t|
+    t.integer "income"
+    t.integer "expense"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.string "age"
-    t.string "job"
+    t.integer "age"
     t.string "sex"
     t.string "family"
-    t.string "address"
-    t.string "img"
     t.integer "rent"
     t.integer "income"
+    t.integer "job_id"
     t.string "password_digest"
     t.string "avatar"
     t.string "remember_digest"
     t.integer "prefecture_id"
+    t.boolean "resign", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

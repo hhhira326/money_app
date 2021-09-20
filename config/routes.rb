@@ -7,6 +7,13 @@ Rails.application.routes.draw do
   get    'login', to: 'sessions#new', as: 'login'
   post   'login', to: 'sessions#create', as: 'login_create'
   delete 'logout', to: 'sessions#destroy', as: 'logout'
+  get 'users/:id/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
+  delete 'resign', to: 'users#resign', as: 'resign'
+  get 'users/:id/moneys', to: 'moneys#new', as: 'moneys_new'
+  get 'users/:id/moneys_index', to: 'moneys#index', as: 'moneys_index'
+  get 'users/:id/moneys_graph', to: 'moneys#show', as: 'moneys_graph'
+
+  
   resources :users, except: [:new]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

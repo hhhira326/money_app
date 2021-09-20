@@ -4,17 +4,16 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :email
       t.integer :age
-      t.string :job
       t.string :sex
       t.string :family
-      t.string :address
-      t.string :img
       t.integer :rent
       t.integer :income
+      t.integer :job_id
       t.string :password_digest
       t.string :avatar
       t.string :remember_digest
       t.integer :prefecture_id
+      t.boolean :resign, null: false, default: false
 
       t.timestamps
     end

@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @user = User.all
+    @user = User.where(resgin: false)
   end
   
 
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find_by(id: params[:id])
   end
-
+  
   def update
     @user = User.find_by(id: params[:id])
     if @user.update(user_params)
@@ -57,10 +57,22 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
+  
+  def unsubscribe
+    @user = User.find_by(id: params[:id])
+  end
+
+  def resign
+    @user = User.find(session[:user_id])
+    @user.update(resign: true)
+    reset_session
+    flash[:success] = '退会完了'
+    redirect_to top_path
+  end
 
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :age, :job, :sex, :family, :prefecture_id, :city, :address, :img, :rent, :income, :password, :password_confirmation, :avatar)
+      params.require(:user).permit(:name, :email, :age, :job_id, :sex, :family, :prefecture_id, :rent, :income, :password, :password_confirmation, :avatar, :resign)
     end
 end

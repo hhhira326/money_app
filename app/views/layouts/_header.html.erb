@@ -1,16 +1,42 @@
 <nav class="navbar nav sticky-top navbar-expand-lg navbar-light bg-white">
   <div class="container-fluid">
-    <%= link_to image_tag("logo.png", size: '170x50', alt: 'マネまねロゴ', class: 'img-responsive'), '/'  %>
+    <%= link_to image_tag("logo.png", size: '200x60', alt: 'マネまねロゴ', class: 'img-responsive'), '/'  %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <% if logged_in? %>
       <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
-        <ul class="navbar-nav">
-          <li><%= link_to '家計簿', '#', class: 'text-decoration-none text-secondary mr-4'%></li>
-          <li><%= link_to 'みんなの平均', '#', class: 'text-decoration-none text-secondary mr-4'%></li>
-          <li><%= link_to '目標', '#', class: 'text-decoration-none text-secondary mr-4'%></li>
-          <li><%= link_to 'ユーザー', user_path(current_user), class: 'text-decoration-none text-secondary mr-4'%></li>
+        <ul class="navbar-nav d-flex align-items-center">
+          <li>
+            <a href='/users/<%= session[:user_id] %>/moneys'>
+              <%= image_tag 'input.png', size: '60x80',alt: '入出金入力' %>
+            </a>
+          </li>
+          <li>
+            <a href='/users/<%= session[:user_id] %>/moneys_index'>
+              <%= image_tag 'history.png', size: '60x80',alt: '入出金履歴' %>
+            </a>
+          </li>
+          <li>
+            <a href='/users/<%= session[:user_id] %>/moneys_graph'>
+              <%= image_tag 'graph2.png', size: '60x80',alt: 'グラフ' %>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <%= image_tag 'graph.png', size: '60x80',alt: 'みんなの平均' %>
+            </a>
+          </li>
+          <li>
+            <a href='#'>
+              <%= image_tag 'pig.png', size: '60x80',alt: '目標' %>
+            </a>
+          </li>
+          <li>
+            <a href="/users/<%= session[:user_id] %>">
+              <%= image_tag User.find(session[:user_id]).avatar.url, size: '80x80', class: 'user-icon' %>
+            </a>
+          </li>
         </ul>
       </div>
     <% else %>
