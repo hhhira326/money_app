@@ -8,17 +8,17 @@
       <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
         <ul class="navbar-nav d-flex align-items-center">
           <li>
-            <a href='/users/<%= session[:user_id] %>/moneys'>
+            <a href='/users/<%= session[:user_id] %>/moneys/new'>
               <%= image_tag 'input.png', size: '60x80',alt: '入出金入力' %>
             </a>
           </li>
           <li>
-            <a href='/users/<%= session[:user_id] %>/moneys_index'>
+            <a href='/users/<%= session[:user_id] %>/moneys'>
               <%= image_tag 'history.png', size: '60x80',alt: '入出金履歴' %>
             </a>
           </li>
           <li>
-            <a href='/users/<%= session[:user_id] %>/moneys_graph'>
+            <a href='/users/<%= session[:user_id] %>/moneys/<%= params[:id] %>'>
               <%= image_tag 'graph2.png', size: '60x80',alt: 'グラフ' %>
             </a>
           </li>
