@@ -28,6 +28,6 @@ class MoneysController < ApplicationController
   private
 
     def money_params
-      params.require(:money).permit(:income, :expense, :income_category_id, :expense_id)
+      params.require(:money).permit(:income, :expense, :income_category_id, :expense_category_id)
     end
 end

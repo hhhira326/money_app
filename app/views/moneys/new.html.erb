@@ -11,8 +11,11 @@
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="income">
-          <%= form_for (@money, url: user_moneys_path) do |f| %>
-
+          <%= form_for(@money, url: user_moneys_path) do |f| %>
+            <%= f.label :'金額：' %>
+            <%= f.text_field :income, data: { autonumeric: { aSign: '¥ ', mDec: 0 } } %>
+            <%= f.label :'カテゴリ：' %>
+            <%= f.collection_select(:income_category_id, Income_category.all, :id, :name, {include_blank: "---"} ) %>
           <% end %>
         </div>
         <div class="tab-pane" id="expense">
