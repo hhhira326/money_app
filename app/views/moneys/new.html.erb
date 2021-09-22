@@ -1,25 +1,46 @@
-<div class="input-container d-flex justify-content-center">
-  <div class="col-md-7 p-0 mt-5">
-    <div class="input_item">
+<h2 class ="w-30 text-center mt-4 p-2 border-bottom font-weight-bold">入出金入力</h2>
+<div class="input-container d-flex justify-content-center ">
+  <div class="col-md-5 p-0 mt-4">
+    <div class="input_item border">
       <ul class="nav nav-tabs justify-content-center text-center nav-pills">
         <li class="nav-item w-50">
           <a href="#income" class="nav-link active " data-toggle="tab" >収入</a>
         </li>
         <li class="nav-item w-50">
-          <a href="#expense" class="nav-link" data-toggle="tab">支出</a>
+          <a href="#expense" class="nav-link"  data-toggle="tab">支出</a>
         </li>
       </ul>
-      <div class="tab-content">
+      <div class="tab-content d-flex justify-content-center">
         <div class="tab-pane active" id="income">
           <%= form_for(@money, url: user_moneys_path) do |f| %>
-            <%= f.label :'金額：' %>
-            <%= f.text_field :income, data: { autonumeric: { aSign: '¥ ', mDec: 0 } } %>
-            <%= f.label :'カテゴリ：' %>
-            <%= f.collection_select(:income_category_id, Income_category.all, :id, :name, {include_blank: "---"} ) %>
+            <ul class="mt-3 p-0">
+              <li><%= f.label :'金額', class: 'm-0' %>
+              <%= f.text_field :income, data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'w-100 text-right'%></li>
+              <li><%= f.label :'カテゴリ', class: 'm-0' %>
+              <%= f.collection_select(:income_category_id, IncomeCategory.all, :id, :name, {include_blank: "---"},class:'w-100 py-1' ) %></li>
+              <li><%= f.label :'日付', class: 'm-0' %>
+              <%= f.date_field :created_at, value:Time.now.strftime("%Y-%m-%d"),class:'w-100' %></li>
+              <li><%= f.label :'内容', class: 'm-0' %>
+              <%= f.text_field :details,class:'w-100' %></li>
+              <li><%= f.submit '保存' ,class:'btn btn-warning font-weight-bold py-2 w-100 my-4' %></li>
+            </ul>
           <% end %>
         </div>
         <div class="tab-pane" id="expense">
-          <p>expense</p>
+           <%= form_for(@money, url: user_moneys_path) do |f| %>
+            <ul class="mt-3 p-0">
+              <li><%= f.label :'金額', class: 'm-0' %>
+              <%= f.text_field :expense, data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'w-100 text-right'%></li>
+              <li><%= f.label :'カテゴリ', class: 'm-0' %>
+              <%= f.collection_select(:expense_category_id, ExpenseCategory.all, :id, :name, {include_blank: "---"},class:'w-100 py-1' ) %></li>
+              <li><%= f.label :'日付', class: 'm-0' %>
+              <%= f.date_field :created_at, value:Time.now.strftime("%Y-%m-%d"),class:'w-100' %></li>
+              <li><%= f.label :'内容', class: 'm-0' %>
+              <%= f.text_field :details,class:'w-100' %></li>
+              <li><%= f.submit '保存' ,class:'btn btn-warning font-weight-bold py-2 w-100 my-4' %></li>
+            </ul>
+          <% end %>
+         
         </div>
       </div>
     </div>

@@ -15,8 +15,10 @@ ActiveRecord::Schema.define(version: 2021_09_18_151519) do
   create_table "money", force: :cascade do |t|
     t.integer "income"
     t.integer "expense"
-    t.integer "income_category"
-    t.integer "expense_category"
+    t.integer "income_category_id"
+    t.integer "expense_category_id"
+    t.text "details"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
