@@ -9,27 +9,32 @@
         <ul class="navbar-nav d-flex align-items-center">
           <li>
             <a href='/users/<%= session[:user_id] %>/moneys/new'>
-              <%= image_tag 'input.png', size: '60x80',alt: '入出金入力' %>
+              <%= image_tag 'input.png', size: '70x90',alt: '入出金入力' %>
             </a>
           </li>
           <li>
             <a href='/users/<%= session[:user_id] %>/moneys'>
-              <%= image_tag 'history.png', size: '60x80',alt: '入出金履歴' %>
+              <%= image_tag 'history.png', size: '70x90',alt: '入出金履歴' %>
             </a>
           </li>
           <li>
             <a href='/users/<%= session[:user_id] %>/moneys/<%= params[:id] %>'>
-              <%= image_tag 'graph2.png', size: '60x80',alt: 'グラフ' %>
+              <%= image_tag 'graph2.png', size: '70x90',alt: 'グラフ' %>
             </a>
           </li>
           <li>
             <a href='#'>
-              <%= image_tag 'graph.png', size: '60x80',alt: 'みんなの平均' %>
+              <%= image_tag 'graph.png', size: '70x90',alt: 'みんなの平均' %>
             </a>
           </li>
           <li>
             <a href='#'>
-              <%= image_tag 'pig.png', size: '60x80',alt: '目標' %>
+              <%= image_tag 'pig.png', size: '70x90',alt: '目標' %>
+            </a>
+          </li>
+          <li>
+            <a href="/users">
+              <%= image_tag 'config.png', size: '70x90', alt: '設定' %>
             </a>
           </li>
           <li>

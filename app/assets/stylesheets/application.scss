@@ -20,7 +20,7 @@
  }
  .navbar-nav {
    li {
-     margin-right: 30px;
+     margin-right: 20px;
    }
  }
 
@@ -56,10 +56,38 @@
   }
 }
 
+
 .input_item {
   max-width: 750px;
 }
 
-.card {
+.card{
   max-width: 800px;
+}
+
+.users-list ul{
+  max-width: 800px;
+}
+
+.pagination {
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.pagination>li>a {          
+  border: none;     
+  color: #696969;
+  padding: 0.4rem 0.75rem;
+}
+
+.page-item.active .page-link {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  border-radius: 50%; 
+}
+
+.pagination>li>a:hover {        
+  border-radius: 50%;   
+  box-sizing:border-box;
+  color: #696969;
 }

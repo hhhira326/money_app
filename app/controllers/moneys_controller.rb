@@ -16,8 +16,9 @@ class MoneysController < ApplicationController
   end
 
   def index
-    @user = User.find_by(id: params[:id])
+    @user = User.find_by(id: params[:user_id])
     @money = @user.money.all
+    
   end
 
   def show

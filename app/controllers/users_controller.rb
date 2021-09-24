@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @user = User.where(resgin: false)
+    @users = User.where(resign: false).page(params[:page]).per(5)
   end
   
 
