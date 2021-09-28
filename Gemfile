@@ -7,6 +7,8 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'carrierwave', '~> 2.0'
 gem 'rmagick'
+gem 'chartkick'
+gem 'groupdate'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.6'
@@ -68,3 +70,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'kaminari', '~> 0.17.0'
+gem 'pry-rails'

@@ -20,3 +20,6 @@
 //= require turbolinks
 //= require_tree .
 //= require autonumeric
+//= require chartkick
+//= require Chart.bundle
+

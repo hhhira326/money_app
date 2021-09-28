@@ -1,0 +1,46 @@
+  <div class="col-md-5 p-0 mt-4">
+    <div class="input_item" id="search">
+      <ul class="money_history nav nav-tabs justify-content-center text-center nav-pills">
+        <li class="nav-item">
+          <a href="#expense" class="nav-link active"  data-toggle="tab">支出</a>
+        </li>
+        <li class="nav-item">
+          <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
+        </li>
+      </ul>
+      <div class="tab-content d-flex justify-content-center">
+        <div class="tab-pane" id="expense">
+          <table>
+            <% moneys.each do |m| %>
+              <% if m.expense.present? && m.income == nil %>
+                <tr>
+                  <td><%= m.created_at.strftime("%Y年%m月%d日") %></td>
+                  <td><%= m.expense_category&.name %></td>
+                  <td><%= m.expense %></td>
+                  <td><%= m.details %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
+        <div class="tab-pane active" id="income">
+          <div class="graph">
+            <%# pie_chart @moneys.income_category %>
+          </div>
+          <table>
+            <% moneys.each do |m| %>
+              <% if m.income.present? %>
+                <tr>
+                  <td><%= m.created_at.strftime("%Y年%m月%d日") %></td>
+                  <td><%= m.income_category&.name %></td>
+                  <td><%= m.income %></td>
+                  <td><%= m.details %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+

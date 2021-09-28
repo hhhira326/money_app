@@ -7,8 +7,11 @@ class MoneysController < ApplicationController
   def create
     @money = current_user.money.new(money_params)
     if @money.save
+      p "===================="
+      p params
+      p "===================="
       flash[:success] = '登録しました'
-      render 'new'
+      redirect_to new_user_money_path(current_user.id)
     else
       flash[:alert] = '登録に失敗しました'
       render 'new'
@@ -16,9 +19,21 @@ class MoneysController < ApplicationController
   end
 
   def index
+    p "===================="
+    p params
+    p "===================="
     @user = User.find_by(id: params[:user_id])
-    @money = @user.money.all
-    
+    @moneys = @user.money.where("created_at LIKE ?" , "%#{params[:search_date]}%")
+  end
+
+  def search
+    p "===================="
+    p params
+    p "===================="
+    @user = User.find_by(id: params[:user_id])
+    @moneys = @user.money.search(params[:search_date])
+    render 'index'
+
   end
 
   def show
@@ -28,6 +43,6 @@ class MoneysController < ApplicationController
   private
 
     def money_params
-      params.require(:money).permit(:income, :expense, :income_category_id, :expense_category_id, :details, :created_at)
+      params.require(:money).permit(:income, :expense, :income_category_id, :expense_category_id, :details, :created_at, :user_id)
     end
 end
