@@ -92,8 +92,42 @@
   color: #696969;
 }
 
-.money_history {
+#search {
   .nav-item {
     width: 50%;
+  }
+}
+
+.money_history {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  .money_index {
+    max-height: 330px;
+    overflow: scroll;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.target-area {
+  td:nth-child(1) {
+    width: 15%;
+  }
+  td:nth-child(2) {
+    width: 30%;
+  }
+  td:nth-child(3) {
+    width: 25%;
+  }
+  td:nth-child(4) {
+    width: 30%;
+    word-break: break-word;
+  }
+  td {
+    border-bottom: solid 1px #a0a0a0;
+    height: 2.5em;
   }
 }

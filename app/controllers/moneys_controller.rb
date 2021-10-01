@@ -24,6 +24,8 @@ class MoneysController < ApplicationController
     p "===================="
     @user = User.find_by(id: params[:user_id])
     @moneys = @user.money.where("created_at LIKE ?" , "%#{params[:search_date]}%")
+    @incomes = @moneys.where("income > ?", 0)
+    @expenses = @moneys.where("expense > ?", 0)
   end
 
   def search
@@ -31,7 +33,9 @@ class MoneysController < ApplicationController
     p params
     p "===================="
     @user = User.find_by(id: params[:user_id])
-    @moneys = @user.money.search(params[:search_date])
+    @moneys = @user.money.where("created_at LIKE ?" , "%#{params[:search_date]}%")
+    @incomes = @moneys.where("income > ?", 0)
+    @expenses = @moneys.where("expense > ?", 0)
     render 'index'
 
   end

@@ -1,31 +1,10 @@
 <h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">入出金履歴</h2>
 <div class="d-flex justify-content-center">
   <%= form_with url: search_path, method: :get, local: true do %>
-    <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", name="search_date", id="search-date",class="h5 py-2 text-center">
+    <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", name="search_date",class="h5 py-2 text-center">
     <button type="submit" class="btn btn-warning px-4 py-2 ">検索</button>
   <% end %>
 </div>
-<div class="input-container d-flex justify-content-center ">
-  <%= render partial: 'money_index', locals: { moneys: @moneys } %>
+<div class="input-container d-flex justify-content-center mt-4">
+  <%= render partial: 'money_index', locals: { moneys: @moneys, incomes: @incomes, expenses: @expenses } %>
 </div>
-
-<script>
-  $(function () {
-    searchDate = function () {
-      var searchInput = $(this).val(), // 検索ボックスに入力された値
-        targetDate;
-
-      $("#{@money}").each(function () {
-        targetDate = $(this).val();
-
-        // 検索対象となるリストに入力された文字列が存在するかどうかを判断
-        $(targetDate.indexOf(searchInput) != -1) {
-          $(this).toggleClass("hidden");
-        }
-      });
-    };
-
-    // searchDateの実行
-    $("#search-date").change("input", searchDate);
-  });
-</script>
