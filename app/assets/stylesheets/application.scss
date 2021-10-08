@@ -69,6 +69,8 @@
   max-width: 800px;
 }
 
+// ページネーション
+
 .pagination {
   justify-content: center;
   margin: 10px 0;
@@ -92,11 +94,8 @@
   color: #696969;
 }
 
-#search {
-  .nav-item {
-    width: 50%;
-  }
-}
+// 入出金履歴
+
 
 .money_history {
   display: flex;

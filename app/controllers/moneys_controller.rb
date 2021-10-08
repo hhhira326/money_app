@@ -23,6 +23,7 @@ class MoneysController < ApplicationController
     p params
     p "===================="
     @user = User.find_by(id: params[:user_id])
+    gon.user = @user
     @moneys = @user.money.where("created_at LIKE ?" , "%#{params[:search_date]}%")
     @incomes = @moneys.where("income > ?", 0)
     @expenses = @moneys.where("expense > ?", 0)

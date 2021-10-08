@@ -14,12 +14,11 @@
 //= require jquery
 //= require popper
 //= require bootstrap
+//= Chart.min
 // 
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree .
 //= require autonumeric
-//= require chartkick
-//= require Chart.bundle
 
