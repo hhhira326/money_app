@@ -1,6 +1,6 @@
-<h2 class ="w-30 text-center mt-4 p-2 border-bottom font-weight-bold">ユーザー</h2>
-<div class="users-list d-flex justify-content-center ">
-  <ul class="list-group w-100 text-center col-md-7">
+<h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">ユーザー</h2>
+<div class="users-list mx-auto">
+  <ul class="list-group w-100 text-center">
     <%= paginate @users %>
     <% @users.each do |user| %>
         <li class="list-group-item">

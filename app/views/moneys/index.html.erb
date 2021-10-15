@@ -1,10 +1,92 @@
 <h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">入出金履歴</h2>
 <div class="d-flex justify-content-center">
-  <%= form_with url: search_path, method: :get, local: true do %>
-    <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", name="search_date",class="h5 py-2 text-center">
-    <button type="submit" class="btn btn-warning px-4 py-2 ">検索</button>
-  <% end %>
+  <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", id="searchDate", class="h5 py-2 text-center">
 </div>
-<div class="input-container d-flex justify-content-center mt-4">
-  <%= render partial: 'money_index', locals: { moneys: @moneys, incomes: @incomes, expenses: @expenses } %>
+<div class="input-container d-flex justify-content-center mt-4">   
+  <div class="input_item" id="search">
+    <ul class="nav nav-tabs justify-content-center text-center nav-pills ">
+      <li class="nav-item w-50">
+        <a href="#expense" class="nav-link active"  data-toggle="tab">支出</a>
+      </li>
+      <li class="nav-item w-50">
+        <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="expense">
+        <div class="money_history">
+          <div class="graph col-md-6">
+            <canvas id="expenses-chart" width="400" height="400"></canvas>
+            <script>
+              var ctx = document.getElementById('expenses-chart');
+              var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                  labels: ['食費', '水道光熱費', '通信費', '交通費', '美容費', '医療費', '被服費', '日用品', '教養費', '趣味・娯楽', '住居費'],
+                  datasets: [{
+                    data: [gon.foodVal, gon.utilityVal, gon.phoneVal, gon.transportVal, gon.beautyVal, gon.medicalVal, gon.clothingVal, gon.dailyVal, gon.educationVal, gon.hobbyVal, gon.housingVal], 
+                    backgroundColor: ['#ffbcbc', '#bcffff', '#ffffbc', '#bcbcff', '#ddbcff', '#bcffdd', '#ffbcff', '#ddffbc', '#bcddff', '#ffddbc', '#ffbcdd'],
+                  }],
+                },
+                options: {
+                  legend: {
+                    display: false
+                  }
+                }
+              });
+            </script>
+          </div>
+          <div id="expenses-index" class="money_index col-md-6">
+            <table class="expenses-table">
+              <% @expenses.each do |e| %>
+                <tr class="target-area">
+                  <td><%= e.created_at.strftime("%m/%d") %></td>
+                  <td><%= e.expense_category&.name %></td>
+                  <td>¥<%= e.expense %></td>
+                  <td><%= e.details %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="income">
+        <div class="money_history">
+          <div class="graph col-md-6">
+            <canvas id="incomes-chart" width="400" height="400"></canvas>
+            <script>
+              var ctx = document.getElementById('incomes-chart');
+              var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                  labels: ['給与', '事業・副業'],
+                  datasets: [{
+                    data: [gon.salaryVal, gon.sideIncomeVal],
+                    backgroundColor: ['#ffadd6', '#ffd6ad'],
+                  }],
+                },
+                options: {
+                  legend: {
+                    display: false
+                  }
+                }
+              });
+            </script>
+          </div>
+          <div id="incomes-index" class="money_index col-md-6">
+            <table class="incomes-table">
+              <% @incomes.each do |i| %>
+                <tr class="target-area">
+                  <td><%= i.created_at.strftime("%m/%d") %></td>
+                  <td><%= i.income_category&.name %></td>
+                  <td>¥<%= i.income %></td>
+                  <td><%= i.details %></td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

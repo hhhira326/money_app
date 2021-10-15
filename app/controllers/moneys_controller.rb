@@ -1,6 +1,6 @@
 class MoneysController < ApplicationController
   def new
-    # @user = User.find(params[:user_id])
+    # user = User.find(params[:user_id])
     @money = current_user.money.new
   end
 
@@ -23,21 +23,114 @@ class MoneysController < ApplicationController
     p params
     p "===================="
     @user = User.find_by(id: params[:user_id])
-    gon.user = @user
-    @moneys = @user.money.where("created_at LIKE ?" , "%#{params[:search_date]}%")
+    today = Time.now.strftime("%Y-%m")
+    @moneys = @user.money.where("created_at LIKE ?" , "%#{today}%")
     @incomes = @moneys.where("income > ?", 0)
     @expenses = @moneys.where("expense > ?", 0)
+    # 給料合計
+    @salary = @incomes.where(income_category_id: 1) 
+    @salaryVal = 0
+    @salary.each do |i|
+      @salaryVal += i.income
+    end
+    gon.salaryVal = @salaryVal
+    # 副収入合計
+    @sideIncome = @incomes.where(income_category_id: 2) 
+    @sideIncomeVal = 0
+    @sideIncome.each do |i|
+      @sideIncomeVal += i.income
+    end
+    gon.sideIncomeVal = @sideIncomeVal
+    # 食費
+    @food = @expenses.where(expense_category_id: 1) 
+    @foodVal = 0
+    @food.each do |e|
+      @foodVal += e.expense
+    end
+    gon.foodVal = @foodVal
+    # 水道光熱費
+    @utility = @expenses.where(expense_category_id: 2) 
+    @utilityVal = 0
+    @utility.each do |e|
+      @utilityVal += e.expense
+    end
+    gon.utilityVal = @utilityVal
+    # 通信費
+    @phone = @expenses.where(expense_category_id: 3) 
+    @phoneVal = 0
+    @phone.each do |e|
+      @phoneVal += e.expense
+    end
+    gon.phoneVal = @phoneVal
+    # 交通費
+    @transport = @expenses.where(expense_category_id: 4) 
+    @transportVal = 0
+    @transport.each do |e|
+      @transportVal += e.expense
+    end
+    gon.transportVal = @transportVal
+    # 美容費
+    @beauty = @expenses.where(expense_category_id: 5) 
+    @beautyVal = 0
+    @beauty.each do |e|
+      @beautyVal += e.expense
+    end
+    gon.beautyVal = @beautyVal
+    # 医療費
+    @medical = @expenses.where(expense_category_id: 6) 
+    @medicalVal = 0
+    @medical.each do |e|
+      @medicalVal += e.expense
+    end
+    gon.medicalVal = @medicalVal
+    # 被服費
+    @clothing = @expenses.where(expense_category_id: 7) 
+    @clothingVal = 0
+    @clothing.each do |e|
+      @clothingVal += e.expense
+    end
+    gon.clothingVal = @clothingVal
+    # 日用品
+    @daily = @expenses.where(expense_category_id: 8) 
+    @dailyVal = 0
+    @daily.each do |e|
+      @dailyVal += e.expense
+    end
+    gon.dailyVal = @dailyVal
+    # 教養費
+    @education = @expenses.where(expense_category_id: 9) 
+    @educationVal = 0
+    @education.each do |e|
+      @educationVal += e.expense
+    end
+    gon.educationVal = @educationVal
+    # 趣味・娯楽
+    @hobby = @expenses.where(expense_category_id: 10) 
+    @hobbyVal = 0
+    @hobby.each do |e|
+      @hobbyVal += e.expense
+    end
+    gon.hobbyVal = @hobbyVal
+    # 住居費
+    @housing = @expenses.where(expense_category_id: 11) 
+    @housingVal = 0
+    @housing.each do |e|
+      @housingVal += e.expense
+    end
+    gon.housingVal = @housingVal
+
   end
 
   def search
     p "===================="
     p params
     p "===================="
-    @user = User.find_by(id: params[:user_id])
-    @moneys = @user.money.where("created_at LIKE ?" , "%#{params[:search_date]}%")
-    @incomes = @moneys.where("income > ?", 0)
-    @expenses = @moneys.where("expense > ?", 0)
-    render 'index'
+    moneys = Money.where("created_at LIKE ?" , "%#{params[:searchDate]}%")
+    incomes = moneys.where("income > ?", 0)
+    expenses = moneys.where("expense > ?", 0)
+    respond_to do |format|
+      format.json { render json: {incomes: incomes, expenses: expenses} }
+    end
 
   end
 
