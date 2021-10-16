@@ -2,7 +2,10 @@
 <div class="d-flex justify-content-center">
   <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", id="searchDate", class="h5 py-2 text-center">
 </div>
-<div class="input-container d-flex justify-content-center mt-4">   
+<div id="moneyTotal" class="text-center">
+  <h3><span>収入</span> ¥<%= @incomeTotal.to_s(:delimited) %> - <span>支出</span> ¥<%= @expenseTotal.to_s(:delimited) %> = <span>収支</span> ¥<%= (@incomeTotal - @expenseTotal).to_s(:delimited) %></h1>
+</div>
+<div class="input-container d-flex justify-content-center mb-5">   
   <div class="input_item" id="search">
     <ul class="nav nav-tabs justify-content-center text-center nav-pills ">
       <li class="nav-item w-50">
@@ -12,10 +15,10 @@
         <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
       </li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content mt-3">
       <div class="tab-pane active" id="expense">
         <div class="money_history">
-          <div class="graph col-md-6">
+          <div id="expenses-graph" class="col-md-6">
             <canvas id="expenses-chart" width="400" height="400"></canvas>
             <script>
               var ctx = document.getElementById('expenses-chart');
@@ -42,7 +45,7 @@
                 <tr class="target-area">
                   <td><%= e.created_at.strftime("%m/%d") %></td>
                   <td><%= e.expense_category&.name %></td>
-                  <td>¥<%= e.expense %></td>
+                  <td>¥<%= e.expense.to_s(:delimited) %></td>
                   <td><%= e.details %></td>
                 </tr>
               <% end %>
@@ -52,7 +55,7 @@
       </div>
       <div class="tab-pane" id="income">
         <div class="money_history">
-          <div class="graph col-md-6">
+          <div id="incomes-graph" class="col-md-6">
             <canvas id="incomes-chart" width="400" height="400"></canvas>
             <script>
               var ctx = document.getElementById('incomes-chart');
@@ -79,7 +82,7 @@
                 <tr class="target-area">
                   <td><%= i.created_at.strftime("%m/%d") %></td>
                   <td><%= i.income_category&.name %></td>
-                  <td>¥<%= i.income %></td>
+                  <td>¥<%= i.income.to_s(:delimited) %></td>
                   <td><%= i.details %></td>
                 </tr>
               <% end %>

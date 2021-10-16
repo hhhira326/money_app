@@ -118,6 +118,9 @@ class MoneysController < ApplicationController
       @housingVal += e.expense
     end
     gon.housingVal = @housingVal
+    @incomeTotal = @salaryVal + @sideIncomeVal
+    @expenseTotal = @foodVal + @utilityVal + @phoneVal + @transportVal + @beautyVal + @medicalVal + @clothingVal + @dailyVal + @educationVal + @hobbyVal + @housingVal
+    
 
   end
 
@@ -128,8 +131,107 @@ class MoneysController < ApplicationController
     moneys = Money.where("created_at LIKE ?" , "%#{params[:searchDate]}%")
     incomes = moneys.where("income > ?", 0)
     expenses = moneys.where("expense > ?", 0)
+
+    # 給料合計
+    salary = incomes.where(income_category_id: 1) 
+    salaryVal = 0
+    salary.each do |i|
+      salaryVal += i.income
+    end
+    
+    # 副収入合計
+    sideIncome = incomes.where(income_category_id: 2) 
+    sideIncomeVal = 0
+    sideIncome.each do |i|
+      sideIncomeVal += i.income
+    end
+    
+    # 食費
+    food = expenses.where(expense_category_id: 1) 
+    foodVal = 0
+    food.each do |e|
+      foodVal += e.expense
+    end
+    
+    # 水道光熱費
+    utility = expenses.where(expense_category_id: 2) 
+    utilityVal = 0
+    utility.each do |e|
+      utilityVal += e.expense
+    end
+    
+    # 通信費
+    phone = expenses.where(expense_category_id: 3) 
+    phoneVal = 0
+    phone.each do |e|
+      phoneVal += e.expense
+    end
+    
+    # 交通費
+    transport = expenses.where(expense_category_id: 4) 
+    transportVal = 0
+    transport.each do |e|
+      transportVal += e.expense
+    end
+    
+    # 美容費
+    beauty = expenses.where(expense_category_id: 5) 
+    beautyVal = 0
+    beauty.each do |e|
+      beautyVal += e.expense
+    end
+    
+    # 医療費
+    medical = expenses.where(expense_category_id: 6) 
+    medicalVal = 0
+    medical.each do |e|
+      medicalVal += e.expense
+    end
+    
+    # 被服費
+    clothing = expenses.where(expense_category_id: 7) 
+    clothingVal = 0
+    clothing.each do |e|
+      clothingVal += e.expense
+    end
+    
+    # 日用品
+    daily = expenses.where(expense_category_id: 8) 
+    dailyVal = 0
+    daily.each do |e|
+      dailyVal += e.expense
+    end
+    
+    # 教養費
+    education = expenses.where(expense_category_id: 9) 
+    educationVal = 0
+    education.each do |e|
+      educationVal += e.expense
+    end
+    
+    # 趣味・娯楽
+    hobby = expenses.where(expense_category_id: 10) 
+    hobbyVal = 0
+    hobby.each do |e|
+      hobbyVal += e.expense
+    end
+    
+    # 住居費
+    housing = expenses.where(expense_category_id: 11) 
+    housingVal = 0
+    housing.each do |e|
+      housingVal += e.expense
+    end
+    
+    incomeTotal = salaryVal + sideIncomeVal
+    expenseTotal = foodVal + utilityVal + phoneVal + transportVal + beautyVal + medicalVal + clothingVal + dailyVal + educationVal + hobbyVal + housingVal
+
+    incomes = incomes.as_json(only: ['income','income_category_id', 'details', 'created_at', 'user_id'])
+    expenses = expenses.as_json(only: ['expense' ,'expense_category_id', 'details', 'created_at', 'user_id'])
+    
+    
     respond_to do |format|
-      format.json { render json: {incomes: incomes, expenses: expenses} }
+      format.json { render json: {incomes: incomes, expenses: expenses, incomeTotal: incomeTotal, expenseTotal: expenseTotal, salaryVal: salaryVal, sideIncomeVal: sideIncomeVal, foodVal: foodVal, utilityVal: utilityVal, phoneVal: phoneVal, transportVal: transportVal, beautyVal: beautyVal, medicalVal: medicalVal, clothingVal: clothingVal, dailyVal: dailyVal, educationVal: educationVal, hobbyVal: hobbyVal, housingVal: housingVal} }
     end
 
   end
