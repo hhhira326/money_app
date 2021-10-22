@@ -1,3 +1,4 @@
+
 <h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">入出金履歴</h2>
 <div class="d-flex justify-content-center">
   <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", id="searchDate", class="h5 py-2 text-center">
@@ -21,14 +22,41 @@
           <div id="expenses-graph" class="col-md-6">
             <canvas id="expenses-chart" width="400" height="400"></canvas>
             <script>
+              var expensesCategory = [ 
+                {name:'食費', val: gon.foodVal, color: '#ffbcbc'},
+                {name:'水道光熱費', val: gon.utilityVal, color: '#bcffff'},
+                {name: '通信費', val: gon.phoneVal, color: '#ffffbc'},
+                {name: '交通費', val: gon.transportVal, color: '#bcbcff'},
+                {name:'美容費', val: gon.beautyVal, color: '#ddbcff'},
+                {name:'医療費', val: gon.medicalVal, color: '#bcffdd'},
+                {name: '被服費', val: gon.clothingVal , color: '#ffbcff'},
+                {name: '日用品', val: gon.dailyVal, color: '#ddffbc'},
+                {name: '教養費', val: gon.educationVal, color: '#bcddff'},
+                {name: '趣味・娯楽', val: gon.hobbyVal, color: '#ffddbc'},
+                {name: '住居費', val: gon.housingVal, color: '#ffbcdd'},
+              ];
+
+              expensesCategory.sort(function(a,b) {
+                return b.val - a.val
+              });
+
+              let expensesName = [];
+              let expensesVal = [];
+              let expensesColor =[];
+              for (let i = 0; i < expensesCategory.length; i++) {
+                expensesName.push(expensesCategory[i].name);
+                expensesVal.push(expensesCategory[i].val);
+                expensesColor.push(expensesCategory[i].color);
+              }
+
               var ctx = document.getElementById('expenses-chart');
               var myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                  labels: ['食費', '水道光熱費', '通信費', '交通費', '美容費', '医療費', '被服費', '日用品', '教養費', '趣味・娯楽', '住居費'],
+                  labels: expensesName,
                   datasets: [{
-                    data: [gon.foodVal, gon.utilityVal, gon.phoneVal, gon.transportVal, gon.beautyVal, gon.medicalVal, gon.clothingVal, gon.dailyVal, gon.educationVal, gon.hobbyVal, gon.housingVal], 
-                    backgroundColor: ['#ffbcbc', '#bcffff', '#ffffbc', '#bcbcff', '#ddbcff', '#bcffdd', '#ffbcff', '#ddffbc', '#bcddff', '#ffddbc', '#ffbcdd'],
+                    data: expensesVal, 
+                    backgroundColor: expensesColor,
                   }],
                 },
                 options: {
@@ -42,7 +70,7 @@
           <div id="expenses-index" class="money_index col-md-6">
             <table class="expenses-table">
               <% @expenses.each do |e| %>
-                <tr class="target-area">
+                <tr>
                   <td><%= e.created_at.strftime("%m/%d") %></td>
                   <td><%= e.expense_category&.name %></td>
                   <td>¥<%= e.expense.to_s(:delimited) %></td>
@@ -58,14 +86,32 @@
           <div id="incomes-graph" class="col-md-6">
             <canvas id="incomes-chart" width="400" height="400"></canvas>
             <script>
+              var incomesCategory = [
+                {name: "給与", val: gon.salaryVal, color: '#ffadd6'},
+                {name: "事業・副業", val: gon.sideIncomeVal, color: '#ffd6ad'},
+              ];
+
+              incomesCategory.sort(function(a,b) {
+                return b.val - a.val
+              });
+              
+              let incomesName = [];
+              let incomesVal = [];
+              let incomesColor = [];
+              for (let i = 0; i < incomesCategory.length; i++) {
+                incomesName.push(incomesCategory[i].name);
+                incomesVal.push(incomesCategory[i].val);
+                incomesColor.push(incomesCategory[i].color);
+              }
+
               var ctx = document.getElementById('incomes-chart');
               var myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                  labels: ['給与', '事業・副業'],
+                  labels: incomesName,
                   datasets: [{
-                    data: [gon.salaryVal, gon.sideIncomeVal],
-                    backgroundColor: ['#ffadd6', '#ffd6ad'],
+                    data: incomesVal,
+                    backgroundColor: incomesColor,
                   }],
                 },
                 options: {
@@ -79,7 +125,7 @@
           <div id="incomes-index" class="money_index col-md-6">
             <table class="incomes-table">
               <% @incomes.each do |i| %>
-                <tr class="target-area">
+                <tr>
                   <td><%= i.created_at.strftime("%m/%d") %></td>
                   <td><%= i.income_category&.name %></td>
                   <td>¥<%= i.income.to_s(:delimited) %></td>
@@ -93,3 +139,6 @@
     </div>
   </div>
 </div>
+<%= javascript_include_tag "moneysIndex" %>
+
+

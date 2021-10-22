@@ -11,8 +11,9 @@ Rails.application.routes.draw do
   delete 'resign', to: 'users#resign', as: 'resign'
   
   resources :users, except: [:new] do
-    resources :moneys
+    resources :moneys, except: [:show]
   end
   get 'users/:user_id/search', to: 'moneys#search', as: 'search'
+  get '/users/:user_id/moneys/graph', to: 'moneys#graph', as: 'moneygraph'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

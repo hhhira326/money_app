@@ -235,9 +235,22 @@ class MoneysController < ApplicationController
     end
 
   end
+  
+  def graph
+    @user = User.find_by(id: params[:user_id])
+    year = Time.now.strftime("%Y")
+    @moneys = @user.money.where("created_at LIKE ?" , "%#{year}%")
+    @incomes = @moneys.where("income > ?", 0)
+    @salary = @incomes.where(income_category_id: 1)
+    @sideIncome = @incomes.where(income_category_id: 2)
+    @salaryOct = @salary.where("created_at LIKE ?", "%#{year}-10%")
+    @salaryOctVal = 0
+    @salaryOct.each do |i|
+      @salaryOctVal += i.income
+    end
+  end
 
   def show
-
   end
 
   private

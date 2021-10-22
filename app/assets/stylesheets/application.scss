@@ -38,7 +38,9 @@
   background-color: rgba(0, 0, 0, 0.03);
   font-weight: bold;
 }
-
+.nav-tabs {
+  border: none;
+}
 .tab-pane {
   ul li {
     margin-bottom: 10px;
@@ -47,7 +49,7 @@
   }
 }
 
-.input_item, .card, .users-list {
+.input_item, .card, .users-list, .barChart {
   max-width: 750px;
 }
 
@@ -84,28 +86,46 @@
   .money_index {
     max-height: 330px;
     overflow: scroll;
+    table tr {
+      overflow-x: auto;
+      white-space: nowrap;
+      td{
+      border-bottom: solid 1px #a0a0a0;
+      height: 2.5em;
+      padding-right: 1.5rem;
+      }
+    }
   }
 }
 
+/*-------- graphボタン -----------*/
+// .moneyBtn {
+//   color: #212529;
+//   background-color: #f8f9fa;
+//   border-color: #f8f9fa;
+//   outline: none
+// }
 
-// 履歴一覧
+// .moneyBtn:hover {
+//   background-color: #c7c7c7;
+// }
 
-.target-area {
-  td:nth-child(1) {
-    width: 15%;
-  }
-  td:nth-child(2) {
-    width: 30%;
-  }
-  td:nth-child(3) {
-    width: 25%;
-  }
-  td:nth-child(4) {
-    width: 30%;
-    word-break: break-word;
-  }
-  td {
-    border-bottom: solid 1px #a0a0a0;
-    height: 2.5em;
-  }
+// .btnActive {
+//   color: #212529;
+//   background-color: #ffc107;
+//   border-color: #ffc107;
+// }
+
+// .btnActive:hover {
+//   background-color: #fac935;
+// }
+
+/*--------棒グラフ-----------*/
+
+.barChart {
+  position: relative;
+  height: 50vh;
 }
+
+
+
