@@ -1,17 +1,13 @@
 <h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">グラフ</h2>
-<div class="d-flex justify-content-center">
-  <input type="number" value="<%= Time.now.strftime("%Y") %>" name="year" class="h1" min="2010" max="<%= Time.now.since(5.years).strftime("%Y") %>">
-  <div  class="d-flex align-items-center">
-    <div class="h3 ml-1">年</div>
-    <ul class="nav nav-tabs text-center nav-pills ml-3">
-      <li class="nav-item">
-        <a href="#expense" class="nav-link active mr-1" data-toggle="tab">支出</a>
-      </li>
-      <li class="nav-item">
-        <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
-      </li>
-    </ul>
-  </div>
+<div class="d-flex justify-content-center mb-3">
+  <ul class="nav nav-tabs text-center nav-pills">
+    <li class="nav-item">
+      <a href="#expense" class="nav-link active mr-1" data-toggle="tab">支出</a>
+    </li>
+    <li class="nav-item">
+      <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
+    </li>
+  </ul>
 </div>
 <div class="tab-content text-center mb-4">
   <div class="tab-pane active h3" id="expense">
@@ -21,6 +17,81 @@
         <option value="<%= e.id %>"><%= e.name %></option>
       <% end %>
     </select>
+    <div class="barChart mx-auto" id="expensesChart">
+      <canvas id="expensesBar"></canvas>
+      <script>
+        var ctx = document.getElementById("expensesBar").getContext("2d");
+        var myBar = new Chart(ctx, {
+          type: 'bar',                          
+          data: {
+            labels: gon.labels,
+            datasets: [
+              {         
+                label: "食費",
+                data: gon.foodVal,
+                backgroundColor: '#ffbcbc',
+              },{
+                label: "水道光熱費",
+                data: gon.utilityVal,
+                backgroundColor: '#bcffff',
+              },{
+                label: "通信費",
+                data: gon.phoneVal,
+                backgroundColor: '#ffffbc',
+              },{
+                label: "交通費",
+                data: gon.transportVal,
+                backgroundColor: '#bcbcff',
+              },{
+                label: "美容費",
+                data: gon.beautyVal,
+                backgroundColor: '#ddbcff',
+              },{
+                label: "医療費",
+                data: gon.medicalVal,
+                backgroundColor: '#bcffdd',
+              },{
+                label: "被服費",
+                data: gon.clothingVal,
+                backgroundColor: '#ffbcff',
+              },{
+                label: "日用品",
+                data: gon.dailyVal,
+                backgroundColor: '#ddffbc',
+              },{
+                label: "教養費",
+                data: gon.educationVal,
+                backgroundColor: '#bcddff',
+              },{
+                label: "趣味・娯楽",
+                data: gon.hobbyVal,
+                backgroundColor: '#ffddbc',
+              },{
+                label: "住居費",
+                data: gon.housingVal,
+                backgroundColor: '#ffbcdd',
+              }
+            ],
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display: true,
+              position: 'right',
+            },
+            scales: {
+              xAxes: [{ 
+                barPercentage: 0.5,  
+                stacked: true,
+              }],
+              yAxes: [{
+                stacked: true,
+              }],
+            },
+          }
+        });
+      </script>
+    </div>    
   </div>
   <div class="tab-pane h3" id="income">
     <select class="incomeCategory" name="incomeCategory">
@@ -29,81 +100,45 @@
         <option value="<%= i.id %>"><%= i.name %></option>
       <% end %>
     </select>
-  </div>
-</div>
-<div class="barChart  mx-auto">
-  <canvas id="canvas"></canvas>
-  <script>
-    var ctx = document.getElementById("canvas").getContext("2d");
-    var myBar = new Chart(ctx, {
-      type: 'bar',                          
-      data: {
-        labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-        datasets: [
-          {         
-            label: "食費",
-            data: [10000, 20000, 30000, 20000, 50000, 30000, 0, 90000, 20000, 10000, 50000, 10000],
-            backgroundColor: '#ffbcbc',
-          },{
-            label: "水道光熱費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#bcffff',
-          },{
-            label: "通信費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#ffffbc',
-          },{
-            label: "交通費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#bcbcff',
-          },{
-            label: "美容費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#ddbcff',
-          },{
-            label: "医療費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#bcffdd',
-          },{
-            label: "被服費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#ffbcff',
-          },{
-            label: "日用品",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#ddffbc',
-          },{
-            label: "教養費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#bcddff',
-          },{
-            label: "趣味・娯楽",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#ffddbc',
-          },{
-            label: "住居費",
-            data: [1000, 2000, 3000, 2000, 5000, 3000, 6000, 9000, 2000, 1000, 5000, 1000],
-            backgroundColor: '#ffbcdd',
+    <div class="barChart mx-auto"  id="incomesChart">
+      <canvas id="incomesBar"></canvas>
+      <script>
+        var ctx = document.getElementById("incomesBar").getContext("2d");
+        var myBar = new Chart(ctx, {
+          type: 'bar',                          
+          data: {
+            labels: gon.labels,
+            datasets: [
+              {         
+                label: "給与",
+                data: gon.salaryVal,
+                backgroundColor: '#ffadd6',
+              },{
+                label: "事業・副業",
+                data: gon.sideIncomeVal,
+                backgroundColor: '#ffd6ad',
+              }
+            ],
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display: true,
+              position: 'right',
+            },
+            scales: {
+              xAxes: [{ 
+                barPercentage: 0.5,  
+                stacked: true,
+              }],
+              yAxes: [{
+                stacked: true,
+              }],
+            },
           }
-        ],
-      },
-      options: {
-        responsive: true,
-        legend: {
-          display: true,
-          position: 'right',
-        },
-        scales: {
-          xAxes: [{ 
-            barPercentage: 0.5,  
-            stacked: true,
-          }],
-          yAxes: [{
-            stacked: true,
-          }],
-        },
-      }
-    });
-  </script>
+        });
+      </script>
+    </div>
+  </div>
 </div>
 <%= javascript_include_tag "moneysGraph" %>

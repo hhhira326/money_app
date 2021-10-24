@@ -128,7 +128,8 @@ class MoneysController < ApplicationController
     p "===================="
     p params
     p "===================="
-    moneys = Money.where("created_at LIKE ?" , "%#{params[:searchDate]}%")
+    user = User.find_by(id: params[:userId])
+    moneys = user.money.where("created_at LIKE ?" , "%#{params[:searchDate]}%")
     incomes = moneys.where("income > ?", 0)
     expenses = moneys.where("expense > ?", 0)
 
@@ -238,15 +239,132 @@ class MoneysController < ApplicationController
   
   def graph
     @user = User.find_by(id: params[:user_id])
-    year = Time.now.strftime("%Y")
-    @moneys = @user.money.where("created_at LIKE ?" , "%#{year}%")
-    @incomes = @moneys.where("income > ?", 0)
-    @salary = @incomes.where(income_category_id: 1)
-    @sideIncome = @incomes.where(income_category_id: 2)
-    @salaryOct = @salary.where("created_at LIKE ?", "%#{year}-10%")
-    @salaryOctVal = 0
-    @salaryOct.each do |i|
-      @salaryOctVal += i.income
+
+    gon.labels = []
+    gon.salaryVal = []
+    gon.sideIncomeVal = []
+    gon.foodVal = []
+    gon.utilityVal = []
+    gon.phoneVal = []
+    gon.transportVal = []
+    gon.beautyVal = []
+    gon.medicalVal = []
+    gon.clothingVal = []
+    gon.dailyVal = []
+    gon.educationVal = []
+    gon.hobbyVal = []
+    gon.housingVal = []
+  
+    @money = @user.money.all.order(created_at: :asc)
+    start = @money.first.created_at.strftime("%Y-%m-%d")
+    startDay = @money.first.created_at.strftime("%d").to_i
+
+    last = Time.now.strftime("%Y-%m-%d")
+    lastDay = Time.now.strftime("%d").to_i
+
+    (Date.parse(start)..Date.parse(last)).select{ |d| d.day == startDay }.each do |date|
+      searchDate = date.strftime("%Y-%m")
+      labelDate = date.strftime("%Y/%m")
+      gon.labels.push(labelDate)
+      gon.salaryVal.push(@money.where(income_category_id: 1).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
+      gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
+      gon.foodVal.push(@money.where(expense_category_id: 1).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.utilityVal.push(@money.where(expense_category_id: 2).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.phoneVal.push(@money.where(expense_category_id: 3).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.transportVal.push(@money.where(expense_category_id: 4).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.beautyVal.push(@money.where(expense_category_id: 5).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.medicalVal.push(@money.where(expense_category_id: 6).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.clothingVal.push(@money.where(expense_category_id: 7).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.dailyVal.push(@money.where(expense_category_id: 8).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.educationVal.push(@money.where(expense_category_id: 9).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.hobbyVal.push(@money.where(expense_category_id: 10).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.housingVal.push(@money.where(expense_category_id: 11).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+    end
+
+    if startDay > lastDay
+      lastMonth = Time.now.strftime("%Y-%m")
+      labelLast = Time.now.strftime("%Y/%m")
+      gon.labels.push(labelLast)      
+      gon.salaryVal.push(@money.where(income_category_id: 1).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
+      gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
+      gon.foodVal.push(@money.where(expense_category_id: 1).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.utilityVal.push(@money.where(expense_category_id: 2).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.phoneVal.push(@money.where(expense_category_id: 3).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.transportVal.push(@money.where(expense_category_id: 4).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.beautyVal.push(@money.where(expense_category_id: 5).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.medicalVal.push(@money.where(expense_category_id: 6).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.clothingVal.push(@money.where(expense_category_id: 7).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.dailyVal.push(@money.where(expense_category_id: 8).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.educationVal.push(@money.where(expense_category_id: 9).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.hobbyVal.push(@money.where(expense_category_id: 10).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      gon.housingVal.push(@money.where(expense_category_id: 11).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+
+    end
+  end
+
+  def expenseBar
+    @user = User.find_by(id: params[:userId])
+
+    labels = []
+    searchCateVal = []
+  
+    @money = @user.money.all.order(created_at: :asc)
+    searchCate = @money.where(expense_category_id: params[:expenseId])
+    start = @money.first.created_at.strftime("%Y-%m-%d")
+    startDay = @money.first.created_at.strftime("%d").to_i
+
+    last = Time.now.strftime("%Y-%m-%d")
+    lastDay = Time.now.strftime("%d").to_i
+
+    (Date.parse(start)..Date.parse(last)).select{ |d| d.day == startDay }.each do |date|
+      searchDate = date.strftime("%Y-%m")
+      labelDate = date.strftime("%Y/%m")
+      labels.push(labelDate)
+      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+    end
+
+    if startDay > lastDay
+      lastMonth = Time.now.strftime("%Y-%m")
+      labelLast = Time.now.strftime("%Y/%m")
+      labels.push(labelLast)      
+      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+    end
+
+    respond_to do |format|
+      format.json { render json:{ labels: labels, searchCateVal: searchCateVal } }
+    end
+  end
+
+  def incomeBar
+    @user = User.find_by(id: params[:userId])
+
+    labels = []
+    searchCateVal = []
+  
+    @money = @user.money.all.order(created_at: :asc)
+    searchCate = @money.where(income_category_id: params[:incomeId])
+    start = @money.first.created_at.strftime("%Y-%m-%d")
+    startDay = @money.first.created_at.strftime("%d").to_i
+
+    last = Time.now.strftime("%Y-%m-%d")
+    lastDay = Time.now.strftime("%d").to_i
+
+    (Date.parse(start)..Date.parse(last)).select{ |d| d.day == startDay }.each do |date|
+      searchDate = date.strftime("%Y-%m")
+      labelDate = date.strftime("%Y/%m")
+      labels.push(labelDate)
+      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{searchDate}%").sum(:income))
+    end
+
+    if startDay > lastDay
+      lastMonth = Time.now.strftime("%Y-%m")
+      labelLast = Time.now.strftime("%Y/%m")
+      labels.push(labelLast)      
+      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
+    end
+
+    respond_to do |format|
+      format.json { render json:{ labels: labels, searchCateVal: searchCateVal } }
     end
   end
 

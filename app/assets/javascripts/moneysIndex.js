@@ -3,14 +3,16 @@
 
     $('#searchDate').change(function() {
       var searchDate = $(this).val();
-      // var pass = location.pathname.split("/");
-      // var user_id = pass[2];  
+      var pass = location.pathname.split("/");
+      var userId = pass[2];  
 
       $.ajax({
         type: 'GET',
         url: '/users/:user_id/search',
         data: {
-          searchDate: searchDate},
+          searchDate: searchDate,
+          userId: userId
+        },
           dataType: 'json'
         })
         .done(function(getData) {
