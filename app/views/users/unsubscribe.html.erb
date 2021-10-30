@@ -1,19 +1,17 @@
-<div class="row justify-content-center">
-  <div class="card col-md-7 p-0 mt-5">
-    <div class="card-header font-weight-bold">退会</div>
-    <div class="card-body d-flex justify-content-center ">
-      <div class="unssubscribe">
-        <div class="message text-center my-5">
-          <p>退会するとアカウントと登録データが削除されます。</p>
-          <p>削除したアカウントとデータを復旧させることはできませんのでご注意ください。</p>
-          <p >サービス向上のためにアンケートにご協力いただけると幸いです。</p>
-        </div>
-        <label for="textarea1" class="small">退会理由・サービスについて</label>
-        <textarea id="textarea1" class="form-control"></textarea>
-        <div class="unsubscribe-btn d-flex justify-content-center mt-4">
-          <button type="button" class="btn btn-light px-3 mr-3"><%= link_to '戻る', user_path , class: 'text-decoration-none text-dark'%></button>
-          <button type="submit" class="btn btn-warning ml-3"><%= link_to '退会', resign_path(@user), method: 'delete', class: 'text-decoration-none text-dark'%></button>
-        </div>
+<div class="card">
+  <div class="card-header">退会</div>
+  <div class="card-body">
+    <div class="unssubscribe">
+      <div class="message my-5">
+        <p>退会するとアカウントと登録データが削除されます。</p>
+        <p>削除すると復旧させることはできませんのでご注意ください。</p>
+        <p >サービス向上のためにアンケートにご協力いただけると幸いです。</p>
+      </div>
+      <label for="textarea1" class="small">退会理由・サービスについて</label>
+      <textarea id="textarea1" class="form-control"></textarea>
+      <div class="unsubscribe-btn d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-light px-3 mr-3"><%= link_to '戻る', user_path , class: 'text-decoration-none text-dark'%></button>
+        <button type="submit" class="btn btn-warning ml-3"><%= link_to '退会', resign_path(@user), method: 'delete', class: 'text-decoration-none text-dark'%></button>
       </div>
     </div>
   </div>

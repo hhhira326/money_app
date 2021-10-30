@@ -1,0 +1,24 @@
+<div class="card border-0">
+  <h2 class ="title">みんなの平均</h2>
+  <div>
+    <ul class="nav nav-tabs nav-fill nav-pills mb-3">
+      <li class="nav-item">
+        <a href="#yearlyIncome" class="nav-link active" data-toggle="tab">年収</a>
+      </li>
+      <li class="nav-item"><a href="#livingEpenses" class="nav-link" data-toggle="tab">生活費</a></li>
+      <li class="nav-item"><a href="#savings" class="nav-link" data-toggle="tab">貯蓄額</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane show active" id="yearlyIncome">
+        <%= render partial:'moneys/averageYearlyIncome' %>
+      </div>
+      <div class="tab-pane" id="livingEpenses">
+        <%= render partial:'moneys/averageLivingEpenses' %>
+      </div>
+      <div class="tab-pane" id="savings">
+        <%= render partial:'moneys/averageSavings' %>
+      </div>
+    </div>
+  </div>
+</div>

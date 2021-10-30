@@ -10,6 +10,8 @@ gem 'rmagick'
 gem 'chart_js'
 gem 'groupdate'
 gem 'gon'
+gem 'font-awesome-sass'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.6'

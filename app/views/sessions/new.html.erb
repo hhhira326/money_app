@@ -1,26 +1,23 @@
-<div class="signup row justify-content-center">
-  <div class="card col-md-7 p-0 mt-5">
-    <div class="card-header font-weight-bold">ログイン</div>
-    <div class="card-body d-flex justify-content-center">
-      <div class="col-md-7  p-0">
-        <%= form_for(:session, url: login_create_path) do |f| %>
+<div class="card">
+  <div class="card-header">ログイン</div>
+  <div class="card-body">
+    <%= form_for(:session, url: login_create_path) do |f| %>
 
-          <%= f.label :'メールアドレス', class: 'mt-5 small' %>
-          <%= f.email_field :email, class: 'form-control form-control-sm' %>
+      <%= f.label :'メールアドレス', class: 'mt-5 small' %>
+      <%= f.email_field :email, class: 'form-control form-control-sm' %>
 
-          <%= f.label :'パスワード', class: 'mt-4 small' %>
-          <%= f.password_field :password, class: 'form-control form-control-sm' %>
-          <p class="d-flex flex-column align-items-center ">
-            <%= f.submit "ログイン", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
-            <%= f.label :remember_me do %>
-              <%= f.check_box :remember_me %>
-              <span class="small">ログイン情報を保持する</span>
-            <% end %>
-          </p>
+      <%= f.label :'パスワード', class: 'mt-4 small' %>
+      <%= f.password_field :password, class: 'form-control form-control-sm' %>
+      <p class="d-flex flex-column align-items-center ">
+        <%= f.submit "ログイン", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
+        <%= f.label :remember_me do %>
+          <%= f.check_box :remember_me %>
+          <span class="small">ログイン情報を保持する</span>
         <% end %>
-        <p class="small mt-2 mb-0 text-center"><%= link_to '初めての方はこちら', signup_path, class: 'text-secondary' %></p>
-      </div>
-    </div>
+      </p>
+    <% end %>
+    <p class="small mt-2 mb-0 text-center"><%= link_to '初めての方はこちら', signup_path, class: 'text-secondary' %></p>
   </div>
 </div>
+
 

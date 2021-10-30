@@ -1,0 +1,259 @@
+<div class="savingsChart">
+  <canvas id="savingsAge"></canvas>
+  <script>
+    var ctx = document.getElementById("savingsAge").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["20代", "30代", "40代", "50代", "60代"],
+        datasets: [
+          {         
+            label: "平均値",
+            data: [113, 327, 666, 924 ,1305],
+            backgroundColor: '#ffd8b2',
+          },{
+            label: "中央値",
+            data: [8, 70, 40, 30, 300],
+            backgroundColor: '#ffb2d8',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '単身世帯（年代別）',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,  
+            scaleLabel: {
+              display: true,
+              labelString: '年代'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: '貯蓄額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="savingsChart">
+  <canvas id="savingsIncome"></canvas>
+  <script>
+    var ctx = document.getElementById("savingsIncome").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["収入なし", "300万未満", "300-500万", "500-750万" ,"750-1,000万", "1,000-1,200万", "1,200万以上"],
+        datasets: [
+          {         
+            label: "平均値",
+            data: [335, 472, 690, 1614, 1954, 1542, 2477],
+            backgroundColor: '#bcffdd',
+          },{
+            label: "中央値",
+            data: [0, 20, 145, 562, 1310, 1201, 1750],
+            backgroundColor: '#b7dbff',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '単身世帯（収入別）',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,  
+            scaleLabel: {
+              display: true,
+              labelString: '年収額'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: '貯蓄額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="savingsChart">
+  <canvas id="savingsAgeTwo"></canvas>
+  <script>
+    var ctx = document.getElementById("savingsAgeTwo").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["20代", "30代", "40代", "50代", "60代", "70代以上"],
+        datasets: [
+          {         
+            label: "平均値",
+            data: [292, 591, 1012, 1684, 1745, 1786],
+            backgroundColor: '#ffd8b2',
+          },{
+            label: "中央値",
+            data: [135, 400, 520, 800, 875, 1000],
+            backgroundColor: '#ffb2d8',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '二人以上世帯（年代別）',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,  
+            scaleLabel: {
+              display: true,
+              labelString: '年代'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: '貯蓄額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="savingsChart">
+  <canvas id="savingsIncomeTwo"></canvas>
+  <script>
+    var ctx = document.getElementById("savingsIncomeTwo").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["収入なし", "300万未満", "300-500万", "500-750万" ,"750-1,000万", "1,000-1,200万", "1,200万以上"],
+        datasets: [
+          {         
+            label: "平均値",
+            data: [888, 907, 1079, 1342, 2032, 2386, 4592],
+            backgroundColor: '#bcffdd',
+          },{
+            label: "中央値",
+            data: [441, 300, 420, 720, 1300, 1500, 2745],
+            backgroundColor: '#b7dbff',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '二人以上世帯（収入別）',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,  
+            scaleLabel: {
+              display: true,
+              labelString: '年収額'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: '貯蓄額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="quote">
+  <ul>
+    <li>出典</li>
+    <li>
+      <a href="https://www.shiruporuto.jp/public/data/movie/yoron/tanshin/2020/20bunruit001.html">「家計の金融行動に関する世論調査［単身世帯調査］（令和２年）」</a>
+    </li>
+    <li>
+      <a href="https://www.shiruporuto.jp/public/data/survey/yoron/futari/2020/20bunruif001.html">「家計の金融行動に関する世論調査［二人以上世帯調査］（令和２年）」</a>
+    </li>
+  </ul>
+</div>

@@ -1,4 +1,7 @@
 @import "bootstrap";
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
 * {
   list-style: none;
   font-size: 1.1rem;
@@ -9,17 +12,37 @@
   display: none;
 }
 
+.main-container, .card, .users-list, .barChart {
+  max-width: 750px;
+}
+
+.card {
+  margin: auto;
+  margin-top: 3rem;
+  .card-body {
+    margin: auto;
+    padding:0 0 0.5rem 0;
+    width: 70%;
+  }
+  .card-header {
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+.title {
+  text-align: center;
+  padding-bottom: 0.8rem;
+  border-bottom: solid 1px #dee2e6 ;
+  font-weight: bold;
+}
+
 .navbar-nav {
    li {
      margin-right: 20px;
    }
  }
 
- .card-body {
-  ul li {
-    margin-bottom: 10px;
-  }
-}
 .user-icon {
   border-radius: 50%;
 }
@@ -27,6 +50,7 @@
   p {
     font-size: 0.8em;
     line-height: 0.8em;
+    text-align: center;
   }
 }
 
@@ -40,17 +64,35 @@
 }
 .nav-tabs {
   border: none;
+  justify-content: center;
+  text-align: center;
 }
-.tab-pane {
-  ul li {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    width: 100%;
+.moneyNew, .modal-body {
+  width: 60%;
+  margin: auto;
+  ul {
+    padding: 0;
+    li {
+      // font-size: 1.5rem;
+      input, select{
+        width: 100%;
+      }
+      select {
+        padding: 0.3rem 0;
+      }
+      label {
+        margin: 0;
+      }
+      button {
+        width: 100%;
+        font-weight: bold;
+        margin-top: 1.3rem;
+      }
+    }
   }
 }
-
-.input_item, .card, .users-list, .barChart {
-  max-width: 750px;
+.tab-content {
+  justify-content: center;
 }
 
 /*--------ページネーション-----------*/
@@ -86,6 +128,7 @@
   .money_index {
     max-height: 330px;
     overflow: scroll;
+    width: 50%;
     table tr {
       overflow-x: auto;
       white-space: nowrap;
@@ -98,28 +141,6 @@
   }
 }
 
-/*-------- graphボタン -----------*/
-// .moneyBtn {
-//   color: #212529;
-//   background-color: #f8f9fa;
-//   border-color: #f8f9fa;
-//   outline: none
-// }
-
-// .moneyBtn:hover {
-//   background-color: #c7c7c7;
-// }
-
-// .btnActive {
-//   color: #212529;
-//   background-color: #ffc107;
-//   border-color: #ffc107;
-// }
-
-// .btnActive:hover {
-//   background-color: #fac935;
-// }
-
 /*--------棒グラフ-----------*/
 
 .barChart {
@@ -128,4 +149,95 @@
 }
 
 
+/*---------average出典----------*/
+.quote {
+  margin-top: 2rem;
+  ul {
+    padding-left: 5rem;
+    li {
+      font-size: 0.7rem;
+      a {
+        font-size: 0.7rem;
+      }
+    }
+  } 
+} 
+/*---------average注釈----------*/
 
+.annotation p {
+  font-size: 0.7rem;
+}
+
+/*-------------------*/
+#expenses-graph, #incomes-graph {
+  width: 50%;
+}
+
+
+/*---------履歴の詳細クリック用----------*/
+tbody tr.clickable:hover td {
+  background: #ffeaa9;
+  cursor: pointer;
+}
+
+/*---------目標のテーブル----------*/
+.idea {
+  // text-align: end;
+  table {
+    width: 100%;
+    margin-top: 1.2rem;
+    tr:nth-child(odd) td {
+      background: #ffe597;
+    }
+    th:nth-child(1) {
+      width: 20%;
+    }
+    th:nth-child(2) {
+      width: 35%;
+    }
+    th:nth-child(3) {
+      width: 15%;
+    }
+    th:nth-child(4) {
+      width: 20%;
+    }
+    th:nth-child(5) {
+      width: 10%;
+    }
+    tr {
+      text-align: center;
+      padding-right: 1.5rem;
+      th {
+        background-color: #ffc107;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border: solid 1px #c9c9c9;
+      }
+      td {
+        border: solid 1px #c9c9c9;
+        padding: 0 0.5rem;
+      }
+    }
+  }
+  ideaBtn {
+    text-align: end;
+  }
+  button {
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+}
+
+.goal {
+  width: 70%;
+  text-align: end;
+  margin: auto;
+  margin-top: 1.2rem;
+  h2 {
+    text-align: center;
+    border-bottom: solid 1px black;
+  }
+  .goalBtn {
+    font-weight: bold;
+  }
+}

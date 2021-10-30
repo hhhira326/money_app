@@ -1,0 +1,89 @@
+<div class="card border-0">
+  <h2 class ="title">目標</h2>
+    <div class="goal">
+      <h2>〇〇/〇〇までに￥〇〇貯金</h2>
+      <button type="button" class="btn btn-warning goalBtn" data-toggle="modal" data-target="#goalModal">
+        目標設定
+      </button>
+      <div class="modal fade" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              いつまでにいくら貯金するのか目標設定しよう！
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="goalModal-body py-2 mx-auto">
+                <input type="date" style='width: 8em' name="" id="">までに
+                <input type="number" style='width: 7em' name="" id="">貯金！
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning">登録</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="idea">  
+      <table>
+        <tr>
+          <th>項目</th>
+          <th>対策方法</th>
+          <th>貯金額</th>
+          <th>期限</th>
+          <th><i class="far fa-check-square fa-lg"></i></th>
+        </tr>
+        <tr>
+          <td>水道光熱費</td>
+          <td>電気料金の見直し</td>
+          <td>3000</td>
+          <td>2022/01/31</td>
+          <td><input type="checkbox" class="checkbox"></td>
+        </tr>
+        <tr>
+          <td>食費</td>
+          <td>自炊を増やす</td>
+          <td>10000</td>
+          <td>2021/12/31</td>
+          <td><input type="checkbox" class="checkbox"></td>
+        </tr>
+        <tr>
+          <td>貯金</td>
+          <td>先取り貯金を増やす</td>
+          <td>50000</td>
+          <td>2021/12/31</td>
+          <td><input type="checkbox" class="checkbox"></td>
+        </tr>
+      </table>
+      <div class="ideaBtn">
+        <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#ideaModal"> 貯金方法追加</button>
+      </div>
+      <div class="modal fade" id="ideaModal" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              貯金を増やすためにするべきことを考えよう！
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ul>
+                <li>項目<input type="text" name="" id=""></li>
+                <li>対策方法<input type="text" name="" id=""></li>
+                <li>貯金額<input type="number" name="" id=""></li>
+                <li>期限<input type="month" name="" id=""></li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning">追加</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<%= javascript_include_tag "moneysGoal" %>

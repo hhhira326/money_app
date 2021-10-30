@@ -1,0 +1,212 @@
+<div class="incomeChart">
+  <canvas id="incomeAge"></canvas>
+  <script>
+    var ctx = document.getElementById("incomeAge").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["19以下", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70以上"],
+        datasets: [
+          {         
+            label: "合計平均",
+            data: [129, 260, 362, 400, 437, 470, 498, 514, 518, 415, 332, 285],
+            backgroundColor: '#ffcc99',
+          },{         
+            label: "男性",
+            data: [146, 277, 393, 458, 518, 571, 621, 656, 668, 521, 421, 357],
+            backgroundColor: '#b7dbff',
+          },{         
+            label: "女性",
+            data: [115, 242, 319, 309, 311, 317, 321, 319, 311, 257, 208, 191],
+            backgroundColor: '#ffb7ff',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: '年代別',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              return label;
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,  
+            scaleLabel: {
+              display: true,
+              labelString: '年齢'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: '年収'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="incomeChart" style="height: 500px">
+  <canvas id="incomeWork"></canvas>
+  <script>
+    var ctx = document.getElementById("incomeWork").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["建設", "製造", "卸売・小売", "宿泊・飲食" ,"金融・保険", "不動産・物品賃貸", "水道・光熱", "運輸・郵便", "情報通信", "医療・福祉", "専門・技術・教育", "複合サービス事業", "サービス", "農林水産・鉱物"].map((v)=>v.replace('ー','丨').split("")),
+        datasets: [
+          {         
+            label: "給料",
+            data: [437, 410, 323, 239, 489, 375, 390, 569, 497, 413, 342, 355, 314, 265],
+            backgroundColor: '#bcffdd',
+          },{
+            label: "賞与",
+            data: [72, 92, 49, 13, 141, 48, 54, 146, 114, 90, 55, 97, 38, 35],
+            backgroundColor: '#b7dbff',
+          }
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '業種別',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            title: (tooltipItem, data) => {
+              var label =  ["建設", "製造", "卸売・小売", "宿泊・飲食" ,"金融・保険", "不動産・物品賃貸", "水道・光熱", "運輸・郵便", "情報通信", "医療・福祉", "専門・技術・教育", "複合サービス事業", "サービス", "農林水産・鉱物"];
+            return label[tooltipItem[0].index];
+            },
+            label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              return label;
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,
+            stacked: true,
+            scaleLabel: {
+              display: true,
+              labelString: '業種'
+            }
+          }],
+          yAxes: [{
+            stacked: true,
+            scaleLabel: {
+              display: true,
+              labelString: '年収'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="incomeChart">
+  <canvas id="incomeArea"></canvas>
+  <script>
+    var ctx = document.getElementById("incomeArea").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["札幌", "仙台", "関東信越", "東京", "金沢", "名古屋", "大阪", "広島", "高松", "福岡", "熊本", "沖縄"],
+        datasets: [
+          {         
+            label: "平均値",
+            data: [384, 357, 393, 502, 386, 440, 438, 388, 366, 385, 365, 349],
+            backgroundColor: '#ffd8b2',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: '地域別',
+          fontSize: 25,
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,  
+            scaleLabel: {
+              display: true,
+              labelString: '年代'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: '貯蓄額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 万円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="quote">
+  <ul>
+    <li>出典</li>
+    <li>
+      年代・業種別：
+      <a href="https://www.nta.go.jp/publication/statistics/kokuzeicho/minkan2020/minkan.htm">「国税庁｜民間給与実態統計調査結果（令和２年）」</a>
+    </li>
+    <li>
+      地域別：
+      <a href="https://www.nta.go.jp/publication/statistics/kokuzeicho/minkan2019/minkan.htm">「国税庁｜民間給与実態統計調査結果（令和元年）」</a>
+    </li>    
+  </ul>
+</div>

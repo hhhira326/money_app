@@ -19,6 +19,7 @@ class MoneysController < ApplicationController
   end
 
   def index
+    @editMoney = User.find_by(id: params[:id])
     p "===================="
     p params
     p "===================="
@@ -41,6 +42,14 @@ class MoneysController < ApplicationController
       @sideIncomeVal += i.income
     end
     gon.sideIncomeVal = @sideIncomeVal
+    # 未分類合計
+    @unCateIncome = @incomes.where(income_category_id: 3) 
+    @unCateIncomeVal = 0
+    @unCateIncome.each do |i|
+      @unCateIncomeVal += i.income
+    end
+    gon.unCateIncomeVal = @unCateIncomeVal
+  
     # 食費
     @food = @expenses.where(expense_category_id: 1) 
     @foodVal = 0
@@ -118,8 +127,16 @@ class MoneysController < ApplicationController
       @housingVal += e.expense
     end
     gon.housingVal = @housingVal
-    @incomeTotal = @salaryVal + @sideIncomeVal
-    @expenseTotal = @foodVal + @utilityVal + @phoneVal + @transportVal + @beautyVal + @medicalVal + @clothingVal + @dailyVal + @educationVal + @hobbyVal + @housingVal
+    # 未分類
+    @unCateExpense = @expenses.where(expense_category_id: 12) 
+    @unCateExpenseVal = 0
+    @unCateExpense.each do |e|
+      @unCateExpenseVal += e.expense
+    end
+    gon.unCateExpenseVal = @unCateExpenseVal
+
+    @incomeTotal = @salaryVal + @sideIncomeVal + @unCateIncomeVal
+    @expenseTotal = @foodVal + @utilityVal + @phoneVal + @transportVal + @beautyVal + @medicalVal + @clothingVal + @dailyVal + @educationVal + @hobbyVal + @housingVal + @unCateExpenseVal
     
 
   end
@@ -145,6 +162,13 @@ class MoneysController < ApplicationController
     sideIncomeVal = 0
     sideIncome.each do |i|
       sideIncomeVal += i.income
+    end
+
+    # 未分類
+    unCateIncome = incomes.where(income_category_id: 3) 
+    unCateIncomeVal = 0
+    unCateIncome.each do |i|
+      unCateIncomeVal += i.income
     end
     
     # 食費
@@ -223,16 +247,23 @@ class MoneysController < ApplicationController
     housing.each do |e|
       housingVal += e.expense
     end
+
+    # 未分類
+    unCateExpense = expenses.where(expense_category_id: 12) 
+    unCateExpenseVal = 0
+    unCateExpense.each do |e|
+      unCateExpenseVal += e.expense
+    end
     
-    incomeTotal = salaryVal + sideIncomeVal
-    expenseTotal = foodVal + utilityVal + phoneVal + transportVal + beautyVal + medicalVal + clothingVal + dailyVal + educationVal + hobbyVal + housingVal
+    incomeTotal = salaryVal + sideIncomeVal + unCateIncomeVal
+    expenseTotal = foodVal + utilityVal + phoneVal + transportVal + beautyVal + medicalVal + clothingVal + dailyVal + educationVal + hobbyVal + housingVal + unCateExpenseVal
 
     incomes = incomes.as_json(only: ['income','income_category_id', 'details', 'created_at', 'user_id'])
     expenses = expenses.as_json(only: ['expense' ,'expense_category_id', 'details', 'created_at', 'user_id'])
     
     
     respond_to do |format|
-      format.json { render json: {incomes: incomes, expenses: expenses, incomeTotal: incomeTotal, expenseTotal: expenseTotal, salaryVal: salaryVal, sideIncomeVal: sideIncomeVal, foodVal: foodVal, utilityVal: utilityVal, phoneVal: phoneVal, transportVal: transportVal, beautyVal: beautyVal, medicalVal: medicalVal, clothingVal: clothingVal, dailyVal: dailyVal, educationVal: educationVal, hobbyVal: hobbyVal, housingVal: housingVal} }
+      format.json { render json: {incomes: incomes, expenses: expenses, incomeTotal: incomeTotal, expenseTotal: expenseTotal, salaryVal: salaryVal, sideIncomeVal: sideIncomeVal, unCateIncomeVal: unCateIncomeVal, foodVal: foodVal, utilityVal: utilityVal, phoneVal: phoneVal, transportVal: transportVal, beautyVal: beautyVal, medicalVal: medicalVal, clothingVal: clothingVal, dailyVal: dailyVal, educationVal: educationVal, hobbyVal: hobbyVal, housingVal: housingVal, unCateExpenseVal: unCateExpenseVal} }
     end
 
   end
@@ -243,6 +274,7 @@ class MoneysController < ApplicationController
     gon.labels = []
     gon.salaryVal = []
     gon.sideIncomeVal = []
+    gon.unCateIncomeVal = []
     gon.foodVal = []
     gon.utilityVal = []
     gon.phoneVal = []
@@ -254,6 +286,7 @@ class MoneysController < ApplicationController
     gon.educationVal = []
     gon.hobbyVal = []
     gon.housingVal = []
+    gon.unCateExpenseVal = []
   
     @money = @user.money.all.order(created_at: :asc)
     start = @money.first.created_at.strftime("%Y-%m-%d")
@@ -268,6 +301,7 @@ class MoneysController < ApplicationController
       gon.labels.push(labelDate)
       gon.salaryVal.push(@money.where(income_category_id: 1).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
       gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
+      gon.unCateIncomeVal.push(@money.where(income_category_id: 3).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
       gon.foodVal.push(@money.where(expense_category_id: 1).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
       gon.utilityVal.push(@money.where(expense_category_id: 2).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
       gon.phoneVal.push(@money.where(expense_category_id: 3).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
@@ -279,6 +313,7 @@ class MoneysController < ApplicationController
       gon.educationVal.push(@money.where(expense_category_id: 9).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
       gon.hobbyVal.push(@money.where(expense_category_id: 10).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
       gon.housingVal.push(@money.where(expense_category_id: 11).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      gon.unCateExpenseVal.push(@money.where(expense_category_id: 12).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
     end
 
     if startDay > lastDay
@@ -287,6 +322,7 @@ class MoneysController < ApplicationController
       gon.labels.push(labelLast)      
       gon.salaryVal.push(@money.where(income_category_id: 1).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
       gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
+      gon.unCateIncomeVal.push(@money.where(income_category_id: 3).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
       gon.foodVal.push(@money.where(expense_category_id: 1).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
       gon.utilityVal.push(@money.where(expense_category_id: 2).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
       gon.phoneVal.push(@money.where(expense_category_id: 3).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
@@ -298,7 +334,7 @@ class MoneysController < ApplicationController
       gon.educationVal.push(@money.where(expense_category_id: 9).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
       gon.hobbyVal.push(@money.where(expense_category_id: 10).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
       gon.housingVal.push(@money.where(expense_category_id: 11).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-
+      gon.unCateExpenseVal.push(@money.where(expense_category_id: 12).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
     end
   end
 
@@ -368,7 +404,25 @@ class MoneysController < ApplicationController
     end
   end
 
+  def average
+  end
+
   def show
+  end
+
+  def update
+    @user = User.find_by(id: params[:id])
+    @money = @user.money.where(id: params[:id])
+    if @money.update(money_params)
+      flash[:success] = "更新完了"
+      redirect_to user_moneys_path(@user)
+    else
+      render 'index'
+    end
+  end
+
+  def goal
+    
   end
 
   private

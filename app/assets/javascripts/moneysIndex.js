@@ -1,5 +1,14 @@
 // $(function() {
   $(document).on('turbolinks:load',(function(){
+    
+    $('tr[data-href]').addClass('clickable')
+    .click(function(e) {
+      let bal = $(this).text();
+      console.log(bal);
+      if(!$(e.target).is('a')){
+        window.location = $(e.target).closest('tr').data('href');
+      }
+     });
 
     $('#searchDate').change(function() {
       var searchDate = $(this).val();
@@ -22,6 +31,7 @@
           var expenseTotal = getData.expenseTotal
           var salaryVal = getData.salaryVal
           var sideIncomeVal = getData.sideIncomeVal
+          var unCateIncomeVal = getData.unCateIncomeVal
           var foodVal = getData.foodVal
           var utilityVal = getData.utilityVal
           var phoneVal = getData.phoneVal
@@ -33,6 +43,7 @@
           var educationVal = getData.educationVal
           var hobbyVal = getData.hobbyVal
           var housingVal = getData.housingVal
+          var unCateExpenseVal = getData.unCateExpenseVal
 
           // グラフで使用するデータ
           var expensesCategory = [ 
@@ -47,6 +58,7 @@
             {name: '教養費', val: educationVal, color: '#bcddff'},
             {name: '趣味・娯楽', val: hobbyVal, color: '#ffddbc'},
             {name: '住居費', val: housingVal, color: '#ffbcdd'},
+            {name: '未分類', val: unCateExpenseVal, color: '#c993ff'}
            ];
 
            expensesCategory.sort(function(a,b) {
@@ -65,6 +77,7 @@
           var incomesCategory = [
             {name: "給与", val: salaryVal, color: '#ffadd6'},
             {name: "事業・副業", val: sideIncomeVal, color: '#ffd6ad'},
+            {name: '未分類', val: unCateIncomeVal, color: '#c99fff'}
           ];
 
           incomesCategory.sort(function(a,b) {
@@ -103,7 +116,17 @@
           options: {
             legend: {
               display: false
-            }
+            },
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem,data) {
+                  return data.labels[tooltipItem.index]
+                    + " : "
+                    + data.datasets[0].data[tooltipItem.index].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') 
+                    +' 円';
+                }
+              }
+            }               
           }
         });
 
@@ -121,7 +144,17 @@
           options: {
             legend: {
               display: false
-            }
+            },
+            tooltips: {
+              callbacks: {
+                label: function(tooltipItem,data) {
+                  return data.labels[tooltipItem.index]
+                    + " : "
+                    + data.datasets[0].data[tooltipItem.index].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') 
+                    +' 円';
+                }
+              }
+            }             
           }
         });
 
@@ -135,7 +168,7 @@
           month = ('0' + month).slice(-2);
           date = ('0' + date).slice(-2);
           $('.expenses-table').append(
-            $("<tr></tr>")
+            $('<tr data-href="#"  data-toggle="modal" data-target="#indexModal"></tr>')
             .append($("<td></td>").text(month + "/" + date ))
             .append($("<td></td>").text(category_check(2,val.expense_category_id)))
             .append($("<td></td>").text("¥" + val.expense.toLocaleString()))
@@ -153,12 +186,22 @@
           month = ('0' + month).slice(-2);
           date = ('0' + date).slice(-2);
           $('.incomes-table').append(
-            $("<tr></tr>")
+            $('<tr data-href="#"  data-toggle="modal" data-target="#indexModal"></tr>')
             .append($("<td></td>").text(month + "/" + date ))
             .append($("<td></td>").text(category_check(1,val.income_category_id)))
             .append($("<td></td>").text("¥" + val.income.toLocaleString()))
             .append($("<td></td>").text(val.details))
           );
+        });
+
+        //show用
+        $('tr[data-href]').addClass('clickable')
+        .click(function(e) {
+          let bal = $(this).text();
+          console.log(bal);
+          if(!$(e.target).is('a')){
+            window.location = $(e.target).closest('tr').data('href');
+          }
         });
 
         // カテゴリーの名前を表示するためのメソッド
@@ -168,6 +211,8 @@
             cate_name = "給与";
           } else if (inorout == 1 && cate_id == 2) {
             cate_name = "事業・副業";
+          } else if (inorout == 1 && cate_id == 3) {
+            cate_name = "未分類";
           } else if (inorout == 2 && cate_id == 1) {
             cate_name = "食費";
           } else if (inorout == 2 && cate_id == 2) {
@@ -187,14 +232,14 @@
           } else if (inorout == 2 && cate_id == 9) {
             cate_name = "教養費";
           } else if (inorout == 2 && cate_id == 10) {
-            ("趣味・娯楽");
+            cate_name = ("趣味・娯楽");
           } else if (inorout == 2 && cate_id == 11) {
-            ("住居費");
+            cate_name = ("住居費");
+          } else if (inorout == 2 && cate_id == 12) {
+            cate_name = ("未分類");
           }
           return cate_name;
         }
-
-      
       });
   
     });

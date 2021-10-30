@@ -14,8 +14,11 @@ Rails.application.routes.draw do
     resources :moneys, except: [:show]
   end
   get 'users/:user_id/search', to: 'moneys#search', as: 'search', defaults: {format: :json}
-  get '/users/:user_id/moneys/graph', to: 'moneys#graph', as: 'moneygraph'
+  get '/users/:user_id/moneys/graph', to: 'moneys#graph', as: 'graph'
   get '/users/:user_id/expenseBar', to: 'moneys#expenseBar', as: 'expenseBar', defaults: {format: :json}
   get '/users/:user_id/incomeBar', to: 'moneys#incomeBar', as: 'incomeBar', defaults: {format: :json}
+  get '/users/:user_id/moneys/average', to: 'moneys#average', as: 'average'
+  get '/users/:user_id/moneys/goal', to: 'moneys#goal', as: 'goal'
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

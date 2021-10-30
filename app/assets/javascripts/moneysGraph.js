@@ -3,7 +3,7 @@ $(function () {
     let expenseId = $(this).val();
     let pass = location.pathname.split("/");
     let userId = pass[2];  
-    
+
     $.ajax({
       type: 'GET',
       url: '/users/:user_id/expenseBar',
@@ -51,11 +51,19 @@ $(function () {
       } else if (expenseId == 11) {
         cateName = "住居費";
         cateColor = "#ffbcdd";
+      } else if (expenseId == 12) {
+        cateName = "未分類";
+        cateColor = "#c993ff";
       }
-    
-      $('#expensesBar').remove();
-      $('#expensesChart').append('<canvas id="expensesBar"></canvas>');
-      var ctx = document.getElementById("expensesBar").getContext("2d");
+
+      if (expenseId == 0) {
+        $('#expensesBar').show();
+        $('#expensesBarAjax').hide();
+      } else {
+        $('#expensesBar').hide();
+        $('#expensesChart').append('<canvas id="expensesBarAjax"></canvas>');
+      }
+      var ctx = document.getElementById("expensesBarAjax").getContext("2d");
       var myBar = new Chart(ctx, {
         type: 'bar',                          
         data: {
@@ -73,6 +81,13 @@ $(function () {
           legend: {
             display: false,
           },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +'円';
+              }
+            }
+          },              
           scales: {
             xAxes: [{ 
               barPercentage: 0.5,  
@@ -80,6 +95,11 @@ $(function () {
             }],
             yAxes: [{
               stacked: true,
+              ticks: {
+                callback: function(label,index,labels) {
+                  return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+              }              
             }],
           },
         }
@@ -112,11 +132,19 @@ $(function () {
       } else if (incomeId == 2) {
         cateName = "事業・副業";
         cateColor = "#ffd6ad";
+      } else if (incomeId == 3) {
+        cateName = "未分類";
+        cateColor = "#c993ff";
       }
       
-      $('#incomesBar').remove();
-      $('#incomesChart').append('<canvas id="incomesBar"></canvas>');
-      var ctx = document.getElementById("incomesBar").getContext("2d");
+      if (incomeId == 0) {
+        $('#incomesBar').show();
+        $('#incomesBarAjax').hide();
+      } else {
+        $('#incomesBar').hide();
+        $('#incomesChart').append('<canvas id="incomesBarAjax"></canvas>');
+      }
+      var ctx = document.getElementById("incomesBarAjax").getContext("2d");
       var myBar = new Chart(ctx, {
         type: 'bar',                          
         data: {
@@ -134,6 +162,13 @@ $(function () {
           legend: {
             display: false,
           },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem, data) {
+                return tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +'円';
+              }
+            }
+          },              
           scales: {
             xAxes: [{ 
               barPercentage: 0.5,  
@@ -141,6 +176,11 @@ $(function () {
             }],
             yAxes: [{
               stacked: true,
+              ticks: {
+                callback: function(label,index,labels) {
+                  return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                }
+              }              
             }],
           },
         }

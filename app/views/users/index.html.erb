@@ -1,14 +1,16 @@
-<h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">ユーザー</h2>
-<div class="users-list mx-auto">
-  <ul class="list-group w-100 text-center">
-    <%= paginate @users %>
-    <% @users.each do |user| %>
-        <li class="list-group-item">
-          <%= image_tag user.avatar&.url, size: '40x40', class: 'user-icon mr-4' %>
-          <%= link_to user.name, user %>
-        </li>
-      <% end %>
-    <%= paginate @users %>
-  </ul>
+<div class="card border-0">
+  <h2 class ="title">ユーザー</h2>
+  <div class="card-body">
+    <ul class="list-group w-100 text-center">
+      <%= paginate @users %>
+      <% @users.each do |user| %>
+          <li class="list-group-item">
+            <%= image_tag user.avatar&.url, size: '40x40', class: 'user-icon mr-4' %>
+            <%= link_to user.name, user %>
+          </li>
+        <% end %>
+      <%= paginate @users %>
+    </ul>
+  </div>
 </div>
 

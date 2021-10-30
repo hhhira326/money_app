@@ -1,143 +1,201 @@
-
-<h2 class ="w-30 text-center my-4 p-2 border-bottom font-weight-bold">入出金履歴</h2>
-<div class="d-flex justify-content-center">
-  <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", id="searchDate", class="h5 py-2 text-center">
-</div>
-<div id="moneyTotal" class="text-center">
-  <h3><span>収入</span> ¥<%= @incomeTotal.to_s(:delimited) %> - <span>支出</span> ¥<%= @expenseTotal.to_s(:delimited) %> = <span>収支</span> ¥<%= (@incomeTotal - @expenseTotal).to_s(:delimited) %></h1>
-</div>
-<div class="input-container d-flex justify-content-center mb-5">   
-  <div class="input_item" id="search">
-    <ul class="nav nav-tabs justify-content-center text-center nav-pills ">
-      <li class="nav-item w-50">
-        <a href="#expense" class="nav-link active"  data-toggle="tab">支出</a>
-      </li>
-      <li class="nav-item w-50">
-        <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
-      </li>
-    </ul>
-    <div class="tab-content mt-3">
-      <div class="tab-pane active" id="expense">
-        <div class="money_history">
-          <div id="expenses-graph" class="col-md-6">
-            <canvas id="expenses-chart" width="400" height="400"></canvas>
-            <script>
-              var expensesCategory = [ 
-                {name:'食費', val: gon.foodVal, color: '#ffbcbc'},
-                {name:'水道光熱費', val: gon.utilityVal, color: '#bcffff'},
-                {name: '通信費', val: gon.phoneVal, color: '#ffffbc'},
-                {name: '交通費', val: gon.transportVal, color: '#bcbcff'},
-                {name:'美容費', val: gon.beautyVal, color: '#ddbcff'},
-                {name:'医療費', val: gon.medicalVal, color: '#bcffdd'},
-                {name: '被服費', val: gon.clothingVal , color: '#ffbcff'},
-                {name: '日用品', val: gon.dailyVal, color: '#ddffbc'},
-                {name: '教養費', val: gon.educationVal, color: '#bcddff'},
-                {name: '趣味・娯楽', val: gon.hobbyVal, color: '#ffddbc'},
-                {name: '住居費', val: gon.housingVal, color: '#ffbcdd'},
-              ];
-
-              expensesCategory.sort(function(a,b) {
-                return b.val - a.val
-              });
-
-              let expensesName = [];
-              let expensesVal = [];
-              let expensesColor =[];
-              for (let i = 0; i < expensesCategory.length; i++) {
-                expensesName.push(expensesCategory[i].name);
-                expensesVal.push(expensesCategory[i].val);
-                expensesColor.push(expensesCategory[i].color);
-              }
-
-              var ctx = document.getElementById('expenses-chart');
-              var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                  labels: expensesName,
-                  datasets: [{
-                    data: expensesVal, 
-                    backgroundColor: expensesColor,
-                  }],
-                },
-                options: {
-                  legend: {
-                    display: false
-                  }
-                }
-              });
-            </script>
-          </div>
-          <div id="expenses-index" class="money_index col-md-6">
-            <table class="expenses-table">
-              <% @expenses.each do |e| %>
-                <tr>
-                  <td><%= e.created_at.strftime("%m/%d") %></td>
-                  <td><%= e.expense_category&.name %></td>
-                  <td>¥<%= e.expense.to_s(:delimited) %></td>
-                  <td><%= e.details %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane" id="income">
-        <div class="money_history">
-          <div id="incomes-graph" class="col-md-6">
-            <canvas id="incomes-chart" width="400" height="400"></canvas>
-            <script>
-              var incomesCategory = [
-                {name: "給与", val: gon.salaryVal, color: '#ffadd6'},
-                {name: "事業・副業", val: gon.sideIncomeVal, color: '#ffd6ad'},
-              ];
-
-              incomesCategory.sort(function(a,b) {
-                return b.val - a.val
-              });
-              
-              let incomesName = [];
-              let incomesVal = [];
-              let incomesColor = [];
-              for (let i = 0; i < incomesCategory.length; i++) {
-                incomesName.push(incomesCategory[i].name);
-                incomesVal.push(incomesCategory[i].val);
-                incomesColor.push(incomesCategory[i].color);
-              }
-
-              var ctx = document.getElementById('incomes-chart');
-              var myChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                  labels: incomesName,
-                  datasets: [{
-                    data: incomesVal,
-                    backgroundColor: incomesColor,
-                  }],
-                },
-                options: {
-                  legend: {
-                    display: false
-                  }
-                }
-              });
-            </script>
-          </div>
-          <div id="incomes-index" class="money_index col-md-6">
-            <table class="incomes-table">
-              <% @incomes.each do |i| %>
-                <tr>
-                  <td><%= i.created_at.strftime("%m/%d") %></td>
-                  <td><%= i.income_category&.name %></td>
-                  <td>¥<%= i.income.to_s(:delimited) %></td>
-                  <td><%= i.details %></td>
-                </tr>
-              <% end %>
-            </table>
-          </div>
-        </div>
-      </div>
+<div class="card border-0">
+  <h2 class ="title">入出金履歴</h2>
+    <div id="moneyTotal" class="text-center">
+      <input type="month", value="<%= Time.now.strftime("%Y-%m") %>", id="searchDate", class="h5 py-2 text-center">
+      <h3><span>収入</span> ¥<%= @incomeTotal.to_s(:delimited) %> - <span>支出</span> ¥<%= @expenseTotal.to_s(:delimited) %> = <span>収支</span> ¥<%= (@incomeTotal - @expenseTotal).to_s(:delimited) %></h1>
     </div>
-  </div>
+      <div class="input_item" id="search">
+        <ul class="nav nav-tabs nav-pills nav-fill">
+          <li class="nav-item">
+            <a href="#expense" class="nav-link active"  data-toggle="tab">支出</a>
+          </li>
+          <li class="nav-item">
+            <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
+          </li>
+        </ul>
+        <div class="tab-content mt-3">
+          <div class="tab-pane active" id="expense">
+            <div class="money_history">
+              <div id="expenses-graph" class="px-3">
+                <canvas id="expenses-chart" width="10" height="10"></canvas>
+                <script>
+                  var expensesCategory = [ 
+                    {name:'食費', val: gon.foodVal, color: '#ffbcbc'},
+                    {name:'水道光熱費', val: gon.utilityVal, color: '#bcffff'},
+                    {name: '通信費', val: gon.phoneVal, color: '#ffffbc'},
+                    {name: '交通費', val: gon.transportVal, color: '#bcbcff'},
+                    {name:'美容費', val: gon.beautyVal, color: '#ddbcff'},
+                    {name:'医療費', val: gon.medicalVal, color: '#bcffdd'},
+                    {name: '被服費', val: gon.clothingVal , color: '#ffbcff'},
+                    {name: '日用品', val: gon.dailyVal, color: '#ddffbc'},
+                    {name: '教養費', val: gon.educationVal, color: '#bcddff'},
+                    {name: '趣味・娯楽', val: gon.hobbyVal, color: '#ffddbc'},
+                    {name: '住居費', val: gon.housingVal, color: '#ffbcdd'},
+                    {name: "未分類", val: gon.unCateExpenseVal, color: '#c993ff'},
+                  ];
+
+                  expensesCategory.sort(function(a,b) {
+                    return b.val - a.val
+                  });
+
+                  let expensesName = [];
+                  let expensesVal = [];
+                  let expensesColor =[];
+                  for (let i = 0; i < expensesCategory.length; i++) {
+                    expensesName.push(expensesCategory[i].name);
+                    expensesVal.push(expensesCategory[i].val);
+                    expensesColor.push(expensesCategory[i].color);
+                  }
+
+                  var ctx = document.getElementById('expenses-chart');
+                  var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                      labels: expensesName,
+                      datasets: [{
+                        data: expensesVal, 
+                        backgroundColor: expensesColor,
+                      }],
+                    },
+                    options: {
+                      legend: {
+                        display: false
+                      },
+                      tooltips: {
+                        callbacks: {
+                          label: function(tooltipItem,data) {
+                            return data.labels[tooltipItem.index]
+                              + " : "
+                              + data.datasets[0].data[tooltipItem.index].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') 
+                              +' 円';
+                          }
+                        }
+                      }                
+                    }
+                  });
+                </script>
+              </div>
+              <div id="expenses-index" class="money_index">
+                <table class="expenses-table">
+                  <% @expenses.each do |e| %>
+                    <tr data-href="#"  data-toggle="modal" data-target="#indexModal">
+                      <td><%= e.created_at.strftime("%m/%d") %></td>
+                      <td><%= e.expense_category&.name %></td>
+                      <td>¥<%= e.expense.to_s(:delimited) %></td>
+                      <td><%= e.details %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </div>
+              
+              <div class="modal fade" id="indexModal" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                        <ul>
+                          <li>
+                            <label for="">金額</label>                                                                            
+                            <input type="number" name="" id="">
+                          </li>
+                          <li>
+                            <label for="">カテゴリ</label> 
+                            <select name="">
+                              <%= ExpenseCategory.all.each do |e| %>
+                                <option value="<%= e.id %>"><%= e.name %></option>
+                              <% end %>
+                            </select>
+                          </li>
+                          <li>
+                            <label for="">日付</label> 
+                            <input type="date", value="<%= Time.now.strftime("%Y-%m-%d") %>", id="searchDate", class="mb-0 text-center">
+                          </li>
+                          <li>
+                            <label for="">内容</label> 
+                            <input type="text" name="" id="">
+                          </li>
+                          <li>                          
+                            <button type="button" class="btn btn-warning">変更</button>
+                          </li>
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>  
+
+            </div>
+          </div>
+          <div class="tab-pane" id="income">
+            <div class="money_history">
+              <div id="incomes-graph" class="px-3">
+                <canvas id="incomes-chart" width="400" height="400"></canvas>
+                <script>
+                  var incomesCategory = [
+                    {name: "給与", val: gon.salaryVal, color: '#ffadd6'},
+                    {name: "事業・副業", val: gon.sideIncomeVal, color: '#ffd6ad'},
+                    {name: "未分類", val: gon.unCateIncomeVal, color: '#c993ff'},
+                  ];
+
+                  incomesCategory.sort(function(a,b) {
+                    return b.val - a.val
+                  });
+                  
+                  let incomesName = [];
+                  let incomesVal = [];
+                  let incomesColor = [];
+                  for (let i = 0; i < incomesCategory.length; i++) {
+                    incomesName.push(incomesCategory[i].name);
+                    incomesVal.push(incomesCategory[i].val);
+                    incomesColor.push(incomesCategory[i].color);
+                  }
+
+                  var ctx = document.getElementById('incomes-chart');
+                  var myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                      labels: incomesName,
+                      datasets: [{
+                        data: incomesVal,
+                        backgroundColor: incomesColor,
+                      }],
+                    },
+                    options: {
+                      legend: {
+                        display: false
+                      },
+                      tooltips: {
+                        callbacks: {
+                          label: function(tooltipItem,data) {
+                            return data.labels[tooltipItem.index]
+                              + " : "
+                              + data.datasets[0].data[tooltipItem.index].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') 
+                              +' 円';
+                          }
+                        }
+                      }                     
+                    }
+                  });
+                </script>
+              </div>
+              <div id="incomes-index" class="money_index">
+                <table class="incomes-table">
+                  <% @incomes.each do |i| %>
+                    <tr data-href="#"  data-toggle="modal" data-target="#indexModal">
+                      <td><%= i.created_at.strftime("%m/%d") %></td>
+                      <td><%= i.income_category&.name %></td>
+                      <td>¥<%= i.income.to_s(:delimited) %></td>
+                      <td><%= i.details %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
 </div>
 <%= javascript_include_tag "moneysIndex" %>
 

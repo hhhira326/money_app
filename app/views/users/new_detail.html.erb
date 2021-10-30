@@ -1,41 +1,36 @@
-<div class="row justify-content-center">
-  <div class="card col-md-7 p-0 mt-5">
-    <div class="card-header font-weight-bold">基本情報登録</div>
-    <div class="card-body">
-        <%= form_for(@user) do |f| %>
-          
-            <div class="d-flex">
-              <div class="col-md-6 d-flex justify-content-end">
-                <div>
-                  <%= f.label :'名前：', class: 'mt-4 small' %>
-                  <%= f.text_field :name, class: 'h6' %><br>
-                  <%= f.label :'年齢：', class: 'mt-4 small'%>
-                  <%= f.text_field :age, size: "5", class: 'h6'%> 歳<br>
-                  <%= f.label :'性別：', class: 'mt-4 small' %>
-                  <%= f.radio_button :sex, "男", class: 'mr-2' %>男 <%= f.radio_button :sex, "女", class: 'mr-2' %>女<br>
-                  <%= f.label :'地域：', class: 'mt-4 small' %>
-                  <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"} ) %>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <%= f.label :'仕事：', class: 'mt-4 small' %>
-                <%= f.collection_select(:job_id, Job.all, :id, :name, {include_blank: "---"} ) %><br>
+<div class="card">
+  <div class="card-header">基本情報登録</div>
+  <div class="card-body">
+    <%= form_for(@user) do |f| %>
+      <div class="d-flex">
+        <div class="col-md-6 d-flex justify-content-end">
+          <div>
+            <%= f.label :'名前：', class: 'mt-4 small' %>
+            <%= f.text_field :name, class: 'h6' %><br>
+            <%= f.label :'年齢：', class: 'mt-4 small'%>
+            <%= f.text_field :age, size: "5", class: 'h6'%> 歳<br>
+            <%= f.label :'性別：', class: 'mt-4 small' %>
+            <%= f.radio_button :sex, "男", class: 'mr-2' %>男 <%= f.radio_button :sex, "女", class: 'mr-2' %>女<br>
+            <%= f.label :'地域：', class: 'mt-4 small' %>
+            <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"} ) %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= f.label :'仕事：', class: 'mt-4 small' %>
+          <%= f.collection_select(:job_id, Job.all, :id, :name, {include_blank: "---"} ) %><br>
 
-                <%= f.label :'世帯人数：', class: 'mt-4 small' %>
-                <%= f.select :family, [ ["1人"], ["2人"], ["3人"] ,["4人"], ["5人"], ["6人"], ["7人以上"] ], prompt: "---", class: 'form-control' %><br>
-                <%= f.label :'年収：', class: 'mt-4 small' %>
-                <%= f.text_field :income, size: "5", class: 'h6' %> 万<br>
-                <%= f.label :'家賃：', class: 'mt-4 small' %>
-                <%= f.text_field :rent, size: "5", class: 'h6'%> 万
-              </div>
-            </div>
-         
-      
-          <p class="d-flex flex-column align-items-center ">
-            <%= f.submit "登録", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
-          </p>
-        <% end %>
-        <p class="small mt-2 mb-0 text-center"><%= link_to 'スキップ', user_path(@user), class: 'text-secondary' %></p>
-    </div>
+          <%= f.label :'世帯人数：', class: 'mt-4 small' %>
+          <%= f.select :family, [ ["1人"], ["2人"], ["3人"] ,["4人"], ["5人"], ["6人"], ["7人以上"] ], prompt: "---", class: 'form-control' %><br>
+          <%= f.label :'年収：', class: 'mt-4 small' %>
+          <%= f.text_field :income, size: "5", class: 'h6' %> 万<br>
+          <%= f.label :'家賃：', class: 'mt-4 small' %>
+          <%= f.text_field :rent, size: "5", class: 'h6'%> 万
+        </div>
+      </div>
+      <p class="d-flex flex-column align-items-center ">
+        <%= f.submit "登録", class: 'btn btn-warning mt-5 btn-lg w-50 ' %>
+      </p>
+    <% end %>
+    <p class="small mt-2 mb-0 text-center"><%= link_to 'スキップ', user_path(@user), class: 'text-secondary' %></p>
   </div>
 </div>

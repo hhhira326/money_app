@@ -23,12 +23,12 @@
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href='/users/<%= session[:user_id] %>/moneys/average'>
               <%= image_tag 'graph.png', size: '70x90',alt: 'みんなの平均' %>
             </a>
           </li>
           <li>
-            <a href='#'>
+            <a href='/users/<%= session[:user_id] %>/moneys/goal'>
               <%= image_tag 'pig.png', size: '70x90',alt: '目標' %>
             </a>
           </li>

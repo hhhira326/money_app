@@ -1,0 +1,231 @@
+<div class="expenseChart">
+  <canvas id="expenseAge"></canvas>
+  <script>
+    var ctx = document.getElementById("expenseAge").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["20代", "30代", "40代", "50代", "60代", "70代以上"],
+        datasets: [
+          {         
+            label: "食費",
+            data: [37739, 62775, 74475, 68705, 68514, 57035],
+            backgroundColor: '#ffbcbc',
+          },{
+            label: "住居費",
+            data: [37181, 28289, 20351, 16673, 16727, 13972],
+            backgroundColor: '#bcffff',
+          },{
+            label: "水道光熱費",
+            data: [8608, 16603, 19901, 19455, 20079, 18225],
+            backgroundColor: '#ffffbc',
+          },{
+            label: "家具・日用品",
+            data: [5366, 10611, 11671, 11022, 11809, 8467] ,
+            backgroundColor: '#bcbcff',
+          },{
+            label: "被服費",
+            data: [6174, 9441, 11115, 9725, 6966, 4510],
+            backgroundColor: '#ddbcff',
+          },{
+            label: "医療費",
+            data: [4473, 9252, 10584, 11412, 14381, 12805],
+            backgroundColor: '#bcffdd',
+          },{
+            label: "交通費",
+            data: [13688, 24196, 28708, 27909, 24480, 12978],
+            backgroundColor: '#ffbcff',
+          },{
+            label: "通信費",
+            data: [9300, 12350, 14975, 14888, 11610, 7940],
+            backgroundColor: '#ddffbc',
+          },{
+            label: "教育費",
+            data: [587, 5978, 19972, 16036, 2053, 208],
+            backgroundColor: '#bcddff',
+          },{
+            label: "教養娯楽費",
+            data: [20714, 22321, 27293, 23626, 22984, 16220],
+            backgroundColor: '#ffddbc',
+          },{
+            label: "その他",
+            data: [20891, 34615, 47058, 56267, 51147, 39949],
+            backgroundColor: '#ffbcdd',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: '年代別',
+          fontSize: 25,
+        },
+        tooltips: {
+          mode: 'index',
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+              return label;
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,
+            stacked: true,
+            scaleLabel: {
+              display: true,
+              labelString: '年代'
+            }
+          }],
+          yAxes: [{
+            stacked: true,
+            scaleLabel: {
+              display: true,
+              labelString: '支出額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="expenseChart">
+  <canvas id="expenseFam"></canvas>
+  <script>
+    var ctx = document.getElementById("expenseFam").getContext("2d");
+    var myBar = new Chart(ctx, {
+      type: 'bar',                          
+      data: {
+        labels: ["1人", "2人", "3人", "4人", "5人", "6人以上"],
+        datasets: [
+          {         
+            label: "食費",
+            data: [38257, 66543, 78155, 87071, 94673, 109387],
+            backgroundColor: '#ffbcbc',
+          },{
+            label: "住居費",
+            data: [20948, 18545, 17645, 15319, 15181, 15188],
+            backgroundColor: '#bcffff',
+          },{
+            label: "水道光熱費",
+            data: [11686, 19459, 22614, 24121, 25134, 31296],
+            backgroundColor: '#ffffbc',
+          },{
+            label: "家具・日用品",
+            data: [5293, 10990, 13107, 13919, 15397, 16402] ,
+            backgroundColor: '#bcbcff',
+          },{
+            label: "被服費",
+            data: [4692, 6474, 8904, 12095, 12863, 12962],
+            backgroundColor: '#ddbcff',
+          },{
+            label: "医療費",
+            data: [7029, 14821, 14375, 12778, 13747, 14279],
+            backgroundColor: '#bcffdd',
+          },{
+            label: "交通費",
+            data: [10931, 23118, 27279, 30202, 32957, 30695],
+            backgroundColor: '#ffbcff',
+          },{
+            label: "通信費",
+            data: [7286, 10858, 14037, 16807, 17181, 19381],
+            backgroundColor: '#ddffbc',
+          },{
+            label: "教育費",
+            data: [0, 353, 8934, 26091, 29606, 27856],
+            backgroundColor: '#bcddff',
+          },{
+            label: "教養娯楽費",
+            data: [15452, 21387, 23500, 28900, 30831, 31259],
+            backgroundColor: '#ffddbc',
+          },{
+            label: "その他",
+            data: [28932, 52730, 55785, 48100, 48439, 50105],
+            backgroundColor: '#ffbcdd',
+          }
+        ],
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true,
+          position: 'right',
+        },
+        title: {
+          display: true,
+          text: '世帯人数別',
+          fontSize: 25,
+        },
+        tooltips: {
+          mode: 'index',
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+              if (label) {
+                label += ': ';
+              }
+              label += tooltipItem.yLabel.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+              return label;
+            }
+          }
+        },
+        scales: {
+          xAxes: [{ 
+            barPercentage: 0.5,
+            stacked: true,
+            scaleLabel: {
+              display: true,
+              labelString: '世帯人数'
+            }
+          }],
+          yAxes: [{
+            stacked: true,
+            scaleLabel: {
+              display: true,
+              labelString: '支出額'
+            },
+            ticks: {
+              callback: function(label,index,labels) {
+                return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';
+              }
+            }
+          }]
+        },
+      }
+    });
+  </script>
+</div>
+<div class="annotation mt-5">
+  <p>調査結果は年間支出の合計を12で割った月額の平均生活費のため、毎月買わないような物の購入代金も含んだ金額となっています。</p>
+  <p>住居費に関して、住宅ローン返済費が除外されているばかりでなく、寮や社宅、実家暮らしが含まれているので、実際の住居費よりも低い場合があります。また地域によっても家賃相場に大きな差が生じることも留意してください。</p>
+  <p>参考として、月々の住宅ローン返済平均額は中古マンションで7.7万円、分譲（新築）マンションでは11.6万円。<br>
+    賃貸住宅にかかる平均額は月額76,059円＋共益費月額4,575円
+  </p>
+</div>
+
+<div class="quote">
+  <ul>
+    <li>出典</li>
+    <li>
+      <a href="https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200561&tstat=000000330001&cycle=7&year=20200&month=0&tclass1=000000330001&tclass2=000000330019&tclass3=000000330020&result_back=1&tclass4val=0">「総務省統計局｜家計調査（家計収支編）令和2年（2020年）」</a>
+    </li>
+    <li>
+      <a href="https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00600630&tstat=000001017729&cycle=8&year=20201&month=0&result_back=1&tclass1val=0">「国土交通省 住宅局｜令和２年度 住宅市場動向調査報告書」</a>
+    </li>
+  </ul>
+</div>
