@@ -186,9 +186,6 @@ tbody tr.clickable:hover td {
   table {
     width: 100%;
     margin-top: 1.2rem;
-    tr:nth-child(odd) td {
-      background: #ffe597;
-    }
     th:nth-child(1) {
       width: 20%;
     }
@@ -219,7 +216,7 @@ tbody tr.clickable:hover td {
       }
     }
   }
-  ideaBtn {
+  .ideaBtn {
     text-align: end;
   }
   button {
@@ -227,6 +224,7 @@ tbody tr.clickable:hover td {
     font-weight: bold;
   }
 }
+
 
 .goal {
   width: 70%;

@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_18_151519) do
+ActiveRecord::Schema.define(version: 2021_10_31_032645) do
+
+  create_table "goals", force: :cascade do |t|
+    t.integer "goalSavings"
+    t.date "goalDeadline"
+    t.string "category"
+    t.string "way"
+    t.integer "savings"
+    t.date "deadline"
+    t.boolean "check", default: false, null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "money", force: :cascade do |t|
     t.integer "income"

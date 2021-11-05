@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :remember_token
   has_many :money
+  has_many :goals
   has_secure_password
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :prefecture

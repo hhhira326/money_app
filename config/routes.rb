@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   get '/users/:user_id/expenseBar', to: 'moneys#expenseBar', as: 'expenseBar', defaults: {format: :json}
   get '/users/:user_id/incomeBar', to: 'moneys#incomeBar', as: 'incomeBar', defaults: {format: :json}
   get '/users/:user_id/moneys/average', to: 'moneys#average', as: 'average'
-  get '/users/:user_id/moneys/goal', to: 'moneys#goal', as: 'goal'
+  get '/users/:user_id/goal', to: 'goals#new', as: 'goal'
+  post '/users/:user_id/goal', to: 'goals#create', as: 'goal_create'
+  post '/users/:user_id/check', to: 'goals#check', as: 'check', defaults: {format: :json}
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

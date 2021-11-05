@@ -1,7 +1,7 @@
 <div class="card border-0">
   <h2 class ="title">目標</h2>
     <div class="goal">
-      <h2>〇〇/〇〇までに￥〇〇貯金</h2>
+      <h2>----/--/--までに<br>￥----------貯金</h2>
       <button type="button" class="btn btn-warning goalBtn" data-toggle="modal" data-target="#goalModal">
         目標設定
       </button>
@@ -15,11 +15,13 @@
               </button>
             </div>
             <div class="goalModal-body py-2 mx-auto">
-                <input type="date" style='width: 8em' name="" id="">までに
-                <input type="number" style='width: 7em' name="" id="">貯金！
+              <%= form_for(:goals, url: goal_path) do |f| %>
+                <%= f.date_field :goalDeadline, value:Time.now.strftime("%Y-%m-%d") %>までに
+                <%= f.number_field :goalSavings, style: 'width: 6em' %>円貯金！
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning">登録</button>
+                <%= f.submit "登録", class:'btn btn-warning font-weight-bold py-2' %>
+              <% end %>
             </div>
           </div>
         </div>
@@ -34,30 +36,18 @@
           <th>期限</th>
           <th><i class="far fa-check-square fa-lg"></i></th>
         </tr>
-        <tr>
-          <td>水道光熱費</td>
-          <td>電気料金の見直し</td>
-          <td>3000</td>
-          <td>2022/01/31</td>
-          <td><input type="checkbox" class="checkbox"></td>
-        </tr>
-        <tr>
-          <td>食費</td>
-          <td>自炊を増やす</td>
-          <td>10000</td>
-          <td>2021/12/31</td>
-          <td><input type="checkbox" class="checkbox"></td>
-        </tr>
-        <tr>
-          <td>貯金</td>
-          <td>先取り貯金を増やす</td>
-          <td>50000</td>
-          <td>2021/12/31</td>
-          <td><input type="checkbox" class="checkbox"></td>
-        </tr>
+        <% @goalTable.each do |g| %>
+          <tr>
+            <td><%= g.category %></td>
+            <td><%= g.way %></td>
+            <td>￥<%= g.savings.to_s(:delimited) %></td>
+            <td><%= g.deadline.strftime("%Y/%m/%d") %></td>
+            <td><input type="checkbox" class="checkbox" name="<%= g.id %>" value="<%= g.check %>"></td>
+          <tr>
+        <% end %>
       </table>
       <div class="ideaBtn">
-        <button type="button" class="btn btn-warning " data-toggle="modal" data-target="#ideaModal"> 貯金方法追加</button>
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#ideaModal">貯金方法追加</button>
       </div>
       <div class="modal fade" id="ideaModal" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -70,15 +60,28 @@
             </div>
             <div class="modal-body">
               <ul>
-                <li>項目<input type="text" name="" id=""></li>
-                <li>対策方法<input type="text" name="" id=""></li>
-                <li>貯金額<input type="number" name="" id=""></li>
-                <li>期限<input type="month" name="" id=""></li>
+                <%= form_for(:goals, url: goal_path) do |f| %>
+                  <li>
+                    <%= f.label :category, "項目" %>
+                    <%= f.text_field :category %>
+                  </li>
+                  <li>
+                    <%= f.label :way, "対策方法" %>
+                    <%= f.text_field :way %>
+                  </li>
+                  <li>
+                    <%= f.label :savings, "貯金額" %>
+                    <%= f.number_field :savings %>
+                  </li>
+                  <li>
+                    <%= f.label :deadline, "期限" %>
+                    <%= f.date_field :deadline, value:Time.now.strftime("%Y-%m-%d") %>
+                  </li>
+                  <li>
+                    <%= f.submit "追加", class:'btn btn-warning font-weight-bold py-2 my-4' %>
+                  </li>
               </ul>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-warning">追加</button>
-            </div>
+              <% end %>
           </div>
         </div>
       </div>
@@ -86,4 +89,4 @@
     </div>
 </div>
 
-<%= javascript_include_tag "moneysGoal" %>
+<%= javascript_include_tag "goalNew" %>

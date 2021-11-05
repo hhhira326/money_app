@@ -420,14 +420,11 @@ class MoneysController < ApplicationController
       render 'index'
     end
   end
-
-  def goal
-    
-  end
-
+  
   private
 
     def money_params
       params.require(:money).permit(:income, :expense, :income_category_id, :expense_category_id, :details, :created_at, :user_id)
     end
+
 end
