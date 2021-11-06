@@ -1,9 +1,8 @@
 $(function() {
 
   if (gon.latest) {
-    $('.goal h2').html(`${gon.latestDay}までに<br>￥${gon.latest.goalSavings.toLocaleString()}貯金`);
+    $('.totalGoal').html(`${gon.latestDay}までに<br>￥${gon.latest.goalSavings.toLocaleString()}貯金`);
   }
-
   var $checkTr = $('.checkbox[value="true"]').parents('tr');
   let nearId = [];
   
@@ -44,7 +43,7 @@ $(function() {
       url: '/users/:user_id/check',
       data: {
         checkVal: checkVal,
-        checkId: checkId
+        checkId: checkId,
       },
       dataType: 'json'
     })

@@ -79,7 +79,8 @@
                 <table class="expenses-table">
                   <% @expenses.each do |e| %>
                     <tr data-href="#"  data-toggle="modal" data-target="#indexModal">
-                      <td><%= e.created_at.strftime("%m/%d") %></td>
+                      <input type="hidden" name="id" value="<%= e.id %>">
+                      <td><%= e.created_at.strftime("%Y/%m/%d") %></td>
                       <td><%= e.expense_category&.name %></td>
                       <td>¥<%= e.expense.to_s(:delimited) %></td>
                       <td><%= e.details %></td>
@@ -95,31 +96,20 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
+                      <%= form_for(:money, url: user_money_path(@money.id)) do |f| %>
                         <ul>
-                          <li>
-                            <label for="">金額</label>                                                                            
-                            <input type="number" name="" id="">
-                          </li>
-                          <li>
-                            <label for="">カテゴリ</label> 
-                            <select name="">
-                              <%= ExpenseCategory.all.each do |e| %>
-                                <option value="<%= e.id %>"><%= e.name %></option>
-                              <% end %>
-                            </select>
-                          </li>
-                          <li>
-                            <label for="">日付</label> 
-                            <input type="date", value="<%= Time.now.strftime("%Y-%m-%d") %>", id="searchDate", class="mb-0 text-center">
-                          </li>
-                          <li>
-                            <label for="">内容</label> 
-                            <input type="text" name="" id="">
-                          </li>
-                          <li>                          
-                            <button type="button" class="btn btn-warning">変更</button>
-                          </li>
+                          <%= f.hidden_field :id, value: "" %>
+                          <li><%= f.label :'金額'%>
+                          <%= f.text_field :expense , data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'text-right trMoney' %></li>
+                          <li><%= f.label :'カテゴリ'%>
+                          <%= f.collection_select(:expense_category_id, ExpenseCategory.all, :id, :name, {prompt: false}, class: 'trCate') %></li>
+                          <li><%= f.label :'日付'%>
+                          <%= f.date_field :created_at, class: 'trDate' %></li>
+                          <li><%= f.label :'内容'%>
+                          <%= f.text_field :details, class: 'trDetail' %></li>
+                          <li><%= f.submit '変更' ,class:'btn btn-warning font-weight-bold py-2 my-4' %></li>
                         </ul>
+                      <% end %>
                     </div>
                   </div>
                 </div>
@@ -182,8 +172,9 @@
               <div id="incomes-index" class="money_index">
                 <table class="incomes-table">
                   <% @incomes.each do |i| %>
-                    <tr data-href="#"  data-toggle="modal" data-target="#indexModal">
-                      <td><%= i.created_at.strftime("%m/%d") %></td>
+                    <tr data-href="#"  data-toggle="modal" data-target="#incomeModal">
+                      <input type="hidden" name="id" value="<%= i.id %>">
+                      <td><%= i.created_at.strftime("%Y/%m/%d") %></td>
                       <td><%= i.income_category&.name %></td>
                       <td>¥<%= i.income.to_s(:delimited) %></td>
                       <td><%= i.details %></td>
@@ -191,6 +182,30 @@
                   <% end %>
                 </table>
               </div>
+              <div class="modal fade" id="incomeModal" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <%= form_for(:money, url: user_moneys_path) do |f| %>
+                        <ul>
+                          <li><%= f.label :'金額'%>
+                          <%= f.text_field :expense , data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'text-right trMoney' %></li>
+                          <li><%= f.label :'カテゴリ'%>
+                          <%= f.collection_select(:expense_category_id, IncomeCategory.all, :id, :name, {prompt: false}, class: 'trCate') %></li>
+                          <li><%= f.label :'日付'%>
+                          <%= f.date_field :created_at, class: 'trDate' %></li>
+                          <li><%= f.label :'内容'%>
+                          <%= f.text_field :details, class: 'trDetail' %></li>
+                          <li><%= f.submit '変更' ,class:'btn btn-warning font-weight-bold py-2 my-4' %></li>
+                        </ul>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>  
             </div>
           </div>
         </div>

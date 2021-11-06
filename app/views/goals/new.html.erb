@@ -1,10 +1,13 @@
 <div class="card border-0">
   <h2 class ="title">目標</h2>
     <div class="goal">
-      <h2>----/--/--までに<br>￥----------貯金</h2>
-      <button type="button" class="btn btn-warning goalBtn" data-toggle="modal" data-target="#goalModal">
-        目標設定
-      </button>
+      <h2 class="totalGoal">----/--/--までに<br>￥----------貯金</h2>
+      <div class="d-flex justify-content-center">
+        <h3>￥----------円達成！</h3>
+        <button type="button" class="btn btn-warning goalBtn" data-toggle="modal" data-target="#goalModal">
+          目標設定
+        </button>
+      </div>
       <div class="modal fade" id="goalModal" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -40,7 +43,7 @@
           <tr>
             <td><%= g.category %></td>
             <td><%= g.way %></td>
-            <td>￥<%= g.savings.to_s(:delimited) %></td>
+            <td class="hoge<%= g.id %>">￥<%= g.savings.to_s(:delimited) %></td>
             <td><%= g.deadline.strftime("%Y/%m/%d") %></td>
             <td><input type="checkbox" class="checkbox" name="<%= g.id %>" value="<%= g.check %>"></td>
           <tr>
@@ -80,8 +83,8 @@
                   <li>
                     <%= f.submit "追加", class:'btn btn-warning font-weight-bold py-2 my-4' %>
                   </li>
+                <% end %>
               </ul>
-              <% end %>
           </div>
         </div>
       </div>

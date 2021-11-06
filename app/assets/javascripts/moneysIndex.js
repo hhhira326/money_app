@@ -1,14 +1,76 @@
 // $(function() {
   $(document).on('turbolinks:load',(function(){
-    
+
+    // 履歴詳細モーダル
+    let trId;
+    let trDate;
+    let trCate;
+    let trMoney;
+    let trDetail;
     $('tr[data-href]').addClass('clickable')
     .click(function(e) {
-      let bal = $(this).text();
-      console.log(bal);
+      trDate = $(this).find('td').eq(0).text().replace(/[/]/g, "-");
+      trCate = $(this).find('td').eq(1).text();
+      trMoney = $(this).find('td').eq(2).text().replace(/[^0-9]/g, '');
+      trDetail = $(this).find('td').eq(3).text();
+      trId = $(this).find('input[name="id"]').val();
       if(!$(e.target).is('a')){
         window.location = $(e.target).closest('tr').data('href');
       }
-     });
+      let trCateId;
+      $('.trMoney').val(trMoney);
+      if ($(this).parents('table').hasClass('incomes-table')) {
+        trCateId = incomeCate_check(trCate);
+      } else if ($(this).parents('table').hasClass('expenses-table')) {
+        trCateId = expenseCate_check(trCate)
+      }
+      $('input[name="money_id"]').val(trId);
+      $('.trCate').val(trCateId);
+      $('.trDate').val(trDate);
+      $('.trDetail').val(trDetail);
+    });
+
+    function expenseCate_check(cateName) {
+      let cateId;
+      if (cateName == "食費") {
+        cateId = 1;
+      } else if (cateName == "水道光熱費") {
+        cateId = 2;
+      } else if (cateName == "通信費") {
+        cateId = 3;
+      } else if (cateName == "交通費") {
+        cateId = 4;
+      } else if (cateName == "美容費") {
+        cateId = 5;
+      } else if (cateName == "医療費") {
+        cateId = 6;
+      } else if (cateName == "被服費") {
+        cateId = 7;
+      } else if (cateName == "日用品") {
+        cateId = 8;
+      } else if (cateName == "教養費") {
+        cateId = 9;
+      } else if (cateName == "趣味・娯楽") {
+        cateId = 10;
+      } else if (cateName == "住居費") {
+        cateId = 11;
+      } else if (cateName == "未分類") {
+        cateId = 12;
+      }
+      return cateId;
+    }
+    function incomeCate_check(cateName) {
+      let cateId;
+      if (cateName == "給与") {
+        cateId = 1;
+      } else if (cateName == "事業・副業") {
+        cateId = 2;
+      } else if (cateName == "未分類") {
+        cateId = 3;
+      }
+      return cateId;
+    }
+
 
     $('#searchDate').change(function() {
       var searchDate = $(this).val();
@@ -163,13 +225,15 @@
         $('#expenses-index').append('<table class="expenses-table"></table>')
         $.each(expenses,function(index,val){
           var dateAttr = new Date(val.created_at);
+          var year = dateAttr.getFullYear();
           var month = dateAttr.getMonth()+1;
           var date = dateAttr.getDate();
           month = ('0' + month).slice(-2);
           date = ('0' + date).slice(-2);
           $('.expenses-table').append(
             $('<tr data-href="#"  data-toggle="modal" data-target="#indexModal"></tr>')
-            .append($("<td></td>").text(month + "/" + date ))
+            .append($(`<input type="hidden" name="id" value="${val.id}">`))
+            .append($("<td></td>").text(year + "/" + month + "/" + date ))
             .append($("<td></td>").text(category_check(2,val.expense_category_id)))
             .append($("<td></td>").text("¥" + val.expense.toLocaleString()))
             .append($("<td></td>").text(val.details))
@@ -181,28 +245,90 @@
         $('#incomes-index').append('<table class="incomes-table"></table>')
         $.each(incomes,function(index,val){
           var dateAttr = new Date(val.created_at);
+          var year = dateAttr.getFullYear();
           var month = dateAttr.getMonth()+1;
           var date = dateAttr.getDate();
           month = ('0' + month).slice(-2);
           date = ('0' + date).slice(-2);
           $('.incomes-table').append(
-            $('<tr data-href="#"  data-toggle="modal" data-target="#indexModal"></tr>')
-            .append($("<td></td>").text(month + "/" + date ))
+            $('<tr data-href="#"  data-toggle="modal" data-target="#incomeModal"></tr>')
+            .append($(`<input type="hidden" name="id" value="${val.id}">`))
+            .append($("<td></td>").text(year + "/" + month + "/" + date ))
             .append($("<td></td>").text(category_check(1,val.income_category_id)))
             .append($("<td></td>").text("¥" + val.income.toLocaleString()))
             .append($("<td></td>").text(val.details))
           );
         });
 
-        //show用
+        // 履歴詳細モーダル
+        let trId;
+        let trDate;
+        let trCate;
+        let trMoney;
+        let trDetail;
         $('tr[data-href]').addClass('clickable')
         .click(function(e) {
-          let bal = $(this).text();
-          console.log(bal);
+          trDate = $(this).find('td').eq(0).text().replace(/[/]/g, "-");
+          trCate = $(this).find('td').eq(1).text();
+          trMoney = $(this).find('td').eq(2).text().replace(/[^0-9]/g, '');
+          trDetail = $(this).find('td').eq(3).text();
+          trId = $(this).find('input[name="id"]').val();
           if(!$(e.target).is('a')){
             window.location = $(e.target).closest('tr').data('href');
           }
+          let trCateId;
+          $('.trMoney').val(trMoney);
+          if ($(this).parents('table').hasClass('incomes-table')) {
+            trCateId = incomeCate_check(trCate);
+          } else if ($(this).parents('table').hasClass('expenses-table')) {
+            trCateId = expenseCate_check(trCate)
+          }
+          $('input[name="money_id"]').val(trId);
+          $('.trCate').val(trCateId);
+          $('.trDate').val(trDate);
+          $('.trDetail').val(trDetail);
         });
+
+        function expenseCate_check(cateName) {
+          let cateId;
+          if (cateName == "食費") {
+            cateId = 1;
+          } else if (cateName == "水道光熱費") {
+            cateId = 2;
+          } else if (cateName == "通信費") {
+            cateId = 3;
+          } else if (cateName == "交通費") {
+            cateId = 4;
+          } else if (cateName == "美容費") {
+            cateId = 5;
+          } else if (cateName == "医療費") {
+            cateId = 6;
+          } else if (cateName == "被服費") {
+            cateId = 7;
+          } else if (cateName == "日用品") {
+            cateId = 8;
+          } else if (cateName == "教養費") {
+            cateId = 9;
+          } else if (cateName == "趣味・娯楽") {
+            cateId = 10;
+          } else if (cateName == "住居費") {
+            cateId = 11;
+          } else if (cateName == "未分類") {
+            cateId = 12;
+          }
+          return cateId;
+        }
+        function incomeCate_check(cateName) {
+          let cateId;
+          if (cateName == "給与") {
+            cateId = 1;
+          } else if (cateName == "事業・副業") {
+            cateId = 2;
+          } else if (cateName == "未分類") {
+            cateId = 3;
+          }
+          return cateId;
+        }
 
         // カテゴリーの名前を表示するためのメソッド
         function category_check(inorout, cate_id) {

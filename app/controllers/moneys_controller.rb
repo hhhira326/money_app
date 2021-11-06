@@ -19,7 +19,6 @@ class MoneysController < ApplicationController
   end
 
   def index
-    @editMoney = User.find_by(id: params[:id])
     p "===================="
     p params
     p "===================="
@@ -258,8 +257,8 @@ class MoneysController < ApplicationController
     incomeTotal = salaryVal + sideIncomeVal + unCateIncomeVal
     expenseTotal = foodVal + utilityVal + phoneVal + transportVal + beautyVal + medicalVal + clothingVal + dailyVal + educationVal + hobbyVal + housingVal + unCateExpenseVal
 
-    incomes = incomes.as_json(only: ['income','income_category_id', 'details', 'created_at', 'user_id'])
-    expenses = expenses.as_json(only: ['expense' ,'expense_category_id', 'details', 'created_at', 'user_id'])
+    incomes = incomes.as_json(only: ['id', 'income','income_category_id', 'details', 'created_at', 'user_id'])
+    expenses = expenses.as_json(only: ['id', 'expense' ,'expense_category_id', 'details', 'created_at', 'user_id'])
     
     
     respond_to do |format|
@@ -411,20 +410,23 @@ class MoneysController < ApplicationController
   end
 
   def update
-    @user = User.find_by(id: params[:id])
-    @money = @user.money.where(id: params[:id])
-    if @money.update(money_params)
-      flash[:success] = "更新完了"
-      redirect_to user_moneys_path(@user)
-    else
-      render 'index'
-    end
+    p "=================="
+    p params
+    p "===================="
+    # @user = User.find_by(id: params[:id])
+    # @money = @user.money.where(id: params[:id])
+    # if @money.update(money_params)
+    #   flash[:success] = "更新完了"
+    #   redirect_to user_moneys_path(@user)
+    # else
+    #   render 'index'
+    # end
   end
   
   private
 
     def money_params
-      params.require(:money).permit(:income, :expense, :income_category_id, :expense_category_id, :details, :created_at, :user_id)
+      params.require(:money).permit(:id, :income, :expense, :income_category_id, :expense_category_id, :details, :created_at, :user_id)
     end
 
 end

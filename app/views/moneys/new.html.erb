@@ -11,7 +11,7 @@
       </ul>
       <div class="tab-content moneyNew">
         <div class="tab-pane active" id="expense">
-           <%= form_for(@money, url: user_moneys_path) do |f| %>
+          <%= form_for(@money, url: user_moneys_path) do |f| %>
             <ul class="mt-3">
               <li><%= f.label :'金額'%>
               <%= f.text_field :expense, data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'text-right'%></li>
