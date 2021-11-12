@@ -14,6 +14,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :remember_digest
       t.integer :prefecture_id
       t.boolean :resign, null: false, default: false
+      t.boolean :admin, default: false
 
       t.timestamps
     end

@@ -23,6 +23,7 @@ $(function() {
       checkVal = $(this).val();
       checkId = $(this).attr("name");
     } else {
+      $(this).parents('tr').css('background-color','');
       $(this).val('false');
       checkVal = $(this).val();
       checkId = $(this).attr("name");

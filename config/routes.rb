@@ -11,8 +11,9 @@ Rails.application.routes.draw do
   delete 'resign', to: 'users#resign', as: 'resign'
   
   resources :users, except: [:new] do
-    resources :moneys, except: [:show]
+    resources :moneys, except: [:show, :update, :destroy]
   end
+  post 'users/moneys/update', to: 'moneys#update', as: 'moneysUpdate'
   get 'users/:user_id/search', to: 'moneys#search', as: 'search', defaults: {format: :json}
   get '/users/:user_id/moneys/graph', to: 'moneys#graph', as: 'graph'
   get '/users/:user_id/expenseBar', to: 'moneys#expenseBar', as: 'expenseBar', defaults: {format: :json}

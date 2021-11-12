@@ -9,6 +9,9 @@
           <a href="#income" class="nav-link" data-toggle="tab" >収入</a>
         </li>
       </ul>
+        <% if @money.errors.any? %>
+          <p class="text-danger text-center mb-0 mt-4 font-weight-bold">金額は０以上の半角整数を入力してください。</p>
+        <% end %>
       <div class="tab-content moneyNew">
         <div class="tab-pane active" id="expense">
           <%= form_for(@money, url: user_moneys_path) do |f| %>

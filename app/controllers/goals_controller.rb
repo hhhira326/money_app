@@ -1,9 +1,13 @@
 class GoalsController < ApplicationController
+  before_action :logged_in_user
+  before_action :correct_user
   def new
     @user = User.find_by(id: params[:user_id])
     @goal = @user.goals.new
     @latest = @user.goals.order(created_at: :desc).find_by("goalSavings > ?", 0)
-    @latestDay = @latest.goalDeadline.strftime("%Y/%m/%d")
+    if @latest
+      @latestDay = @latest.goalDeadline.strftime("%Y/%m/%d")
+    end
     @goalTable = @user.goals.order(deadline: :asc).where("savings > ?", 0)
     @hideTable = @goalTable.where(check: true)
     from = Date.today
@@ -44,5 +48,9 @@ class GoalsController < ApplicationController
   private
     def goals_params
       params.require(:goals).permit(:goalSavings, :goalDeadline, :category, :way, :savings, :deadline, :check, :user_id, :created_at)
+    end
+    def correct_user
+      @user = User.find_by(id: params[:user_id])
+      redirect_to top_path unless current_user?(@user)
     end
 end

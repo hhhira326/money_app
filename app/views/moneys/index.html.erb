@@ -15,6 +15,9 @@
         </ul>
         <div class="tab-content mt-3">
           <div class="tab-pane active" id="expense">
+              <% if @expenses == [] %>
+                <h5 class="text-center mt-5 nodata">登録されているデータがありません。</h2>
+              <% end %>
             <div class="money_history">
               <div id="expenses-graph" class="px-3">
                 <canvas id="expenses-chart" width="10" height="10"></canvas>
@@ -96,18 +99,19 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <%= form_for(:money, url: user_money_path(@money.id)) do |f| %>
+                      <%= form_for(:money, url: moneysUpdate_path) do |f| %>
                         <ul>
-                          <%= f.hidden_field :id, value: "" %>
+                          <%= f.hidden_field :id , class: 'trId' %>
                           <li><%= f.label :'金額'%>
-                          <%= f.text_field :expense , data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'text-right trMoney' %></li>
+                          <%= f.text_field :expense , class:'text-right trMoney' %></li>
                           <li><%= f.label :'カテゴリ'%>
                           <%= f.collection_select(:expense_category_id, ExpenseCategory.all, :id, :name, {prompt: false}, class: 'trCate') %></li>
                           <li><%= f.label :'日付'%>
                           <%= f.date_field :created_at, class: 'trDate' %></li>
                           <li><%= f.label :'内容'%>
                           <%= f.text_field :details, class: 'trDetail' %></li>
-                          <li><%= f.submit '変更' ,class:'btn btn-warning font-weight-bold py-2 my-4' %></li>
+                          <li><%= f.submit '変更',name: 'update' ,class:'btn btn-warning font-weight-bold py-2 mt-4' %></li>
+                          <li><%= f.submit '削除',name: 'destroy', class:'btn btn-light font-weight-bold py-2 mt-1' %></li>
                         </ul>
                       <% end %>
                     </div>
@@ -118,6 +122,9 @@
             </div>
           </div>
           <div class="tab-pane" id="income">
+              <% if @incomes == [] %>
+                <h5 class="text-center mt-5 nodata">登録されているデータがありません。</h2>
+              <% end %>
             <div class="money_history">
               <div id="incomes-graph" class="px-3">
                 <canvas id="incomes-chart" width="400" height="400"></canvas>
@@ -199,7 +206,8 @@
                           <%= f.date_field :created_at, class: 'trDate' %></li>
                           <li><%= f.label :'内容'%>
                           <%= f.text_field :details, class: 'trDetail' %></li>
-                          <li><%= f.submit '変更' ,class:'btn btn-warning font-weight-bold py-2 my-4' %></li>
+                          <li><%= f.submit '変更',name: 'update' ,class:'btn btn-warning font-weight-bold py-2 mt-4' %></li>
+                          <li><%= f.submit '削除',name: 'destroy', class:'btn btn-light font-weight-bold py-2 mt-1' %></li>
                         </ul>
                       <% end %>
                     </div>

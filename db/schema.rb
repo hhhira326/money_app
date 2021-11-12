@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_10_31_032645) do
     t.string "remember_digest"
     t.integer "prefecture_id"
     t.boolean "resign", default: false, null: false
+    t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -24,7 +24,7 @@
       } else if ($(this).parents('table').hasClass('expenses-table')) {
         trCateId = expenseCate_check(trCate)
       }
-      $('input[name="money_id"]').val(trId);
+      $('.trId').val(trId);
       $('.trCate').val(trCateId);
       $('.trDate').val(trDate);
       $('.trDetail').val(trDetail);
@@ -106,6 +106,7 @@
           var hobbyVal = getData.hobbyVal
           var housingVal = getData.housingVal
           var unCateExpenseVal = getData.unCateExpenseVal
+
 
           // グラフで使用するデータ
           var expensesCategory = [ 
@@ -219,6 +220,13 @@
             }             
           }
         });
+        $('.nodata').hide();
+        // if (incomes.length == 0) {
+        //   $('#income').html('<h5 class="text-center mt-5 nodata">登録されているデータがありません。</h2>');
+        // } 
+        // if (expenses.length == 0) {
+        //   $('#expense').html('<h5 class="text-center mt-5 nodata">登録されているデータがありません。</h2>');
+        // }
 
         // 支出履歴の表示/非表示
         $('.expenses-table').remove();
@@ -283,7 +291,7 @@
           } else if ($(this).parents('table').hasClass('expenses-table')) {
             trCateId = expenseCate_check(trCate)
           }
-          $('input[name="money_id"]').val(trId);
+          $('.trId').val(trId);
           $('.trCate').val(trCateId);
           $('.trDate').val(trDate);
           $('.trDetail').val(trDetail);

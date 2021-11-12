@@ -32,11 +32,13 @@
               <%= image_tag 'pig.png', size: '70x90',alt: '目標' %>
             </a>
           </li>
-          <li>
-            <a href="/users">
-              <%= image_tag 'config.png', size: '70x90', alt: '設定' %>
-            </a>
-          </li>
+          <% if current_user.admin? && !current_user?(@user) %>
+            <li>
+              <a href="/users">
+                <%= image_tag 'config.png', size: '70x90', alt: '設定' %>
+              </a>
+            </li>
+          <% end %>
           <li>
             <a href="/users/<%= session[:user_id] %>">
               <%= image_tag User.find(session[:user_id]).avatar.url, size: '80x80', class: 'user-icon' %>

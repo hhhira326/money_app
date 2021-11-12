@@ -6,8 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 (1..50).each do |num|
-  User.create(name: "test#{num}", email: "test#{num}@test.com", age: num, job_id: num, sex: "test#{num}", family: "test#{num}", prefecture_id: num, rent: num, income: num, password: "test#{num}", password_confirmation: "test#{num}", avatar: "icon.png", resign: 'false')
+  User.create(name: "test#{num}", email: "test#{num}@test.com", age: num, job_id: num, sex: "test#{num}", family: "test#{num}", prefecture_id: num, rent: num, income: num, password: "test#{num}", password_confirmation: "test#{num}", avatar: "icon.png", resign: 'false', admin: 'false')
 end
+adminUser = User.first
+adminUser.update(admin: true)
 
 (1..12).each do |num|
   user = User.first

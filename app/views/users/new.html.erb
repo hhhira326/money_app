@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-header">新規会員登録</div>
   <div class="card-body">
+  <% if @user.errors.any? %>
+    <p class="text-danger text-center mb-0 mt-4 font-weight-bold">メールアドレスまたはパスワードが無効です。</p>
+  <% end %>
     <%= form_for(@user) do |f| %>
 
       <%= f.label :'メールアドレス', class: 'mt-5 small' %>
