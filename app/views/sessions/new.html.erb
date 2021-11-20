@@ -1,4 +1,5 @@
 <div class="card">
+  <%= render partial:'layouts/flash' %>
   <div class="card-header">ログイン</div>
   <div class="card-body">
     <%= form_for(:session, url: login_create_path) do |f| %>

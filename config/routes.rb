@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post   'login', to: 'sessions#create', as: 'login_create'
   delete 'logout', to: 'sessions#destroy', as: 'logout'
   get 'users/:id/unsubscribe', to: 'users#unsubscribe', as: 'unsubscribe'
-  delete 'resign', to: 'users#resign', as: 'resign'
+  delete 'users/:id/resign', to: 'users#resign', as: 'resign'
   
   resources :users, except: [:new] do
     resources :moneys, except: [:show, :update, :destroy]

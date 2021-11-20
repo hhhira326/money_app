@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       flash[:success] = "登録完了"
     else
+      flash.now[:danger] = '登録に失敗しました'
       render 'new_detail'
     end
   end
@@ -33,6 +34,7 @@ class UsersController < ApplicationController
       p params
       p @user.errors.full_messages
       p "===================="
+      flash.now[:danger] = '登録に失敗しました'
       render 'new'
     end
   end
@@ -56,6 +58,7 @@ class UsersController < ApplicationController
       flash[:success] = "更新完了"
       redirect_to user_path(@user)
     else
+      flash.now[:danger] = '更新に失敗しました'
       render 'edit'
     end
   end

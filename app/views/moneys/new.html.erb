@@ -1,6 +1,7 @@
 <div class="card border-0">
   <h2 class ="title">入出金入力</h2>
   <div class="card-body">
+    <%= render partial:'layouts/flash' %>
       <ul class="nav nav-tabs nav-pills nav-fill">
         <li class="nav-item">
           <a href="#expense" class="nav-link active" data-toggle="tab">支出</a>
@@ -10,7 +11,7 @@
         </li>
       </ul>
         <% if @money.errors.any? %>
-          <p class="text-danger text-center mb-0 mt-4 font-weight-bold">金額は０以上の半角整数を入力してください。</p>
+          <p class="text-danger text-center mb-0 mt-4 font-weight-bold">金額は１以上の半角整数を入力してください。</p>
         <% end %>
       <div class="tab-content moneyNew">
         <div class="tab-pane active" id="expense">

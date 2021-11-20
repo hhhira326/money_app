@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
-  before_action :logged_in_user
-  before_action :correct_user
+  before_action :logged_in_user, except: [:check]
+  before_action :correct_user, except: [:check]
   def new
     @user = User.find_by(id: params[:user_id])
     @goal = @user.goals.new
@@ -25,7 +25,7 @@ class GoalsController < ApplicationController
       p "===================="
       p params
       p "===================="
-      flash[:success] = '登録しました'
+      flash[:success] = '登録完了'
       redirect_to goal_path(current_user.id)
     else
       flash[:alert] = '登録に失敗しました'
@@ -34,11 +34,11 @@ class GoalsController < ApplicationController
   end
 
   def check
+    p "============="
+    p params
+    p "============="
     @goal = current_user.goals.find_by(id: params[:checkId])
     @goal.update(check: params[:checkVal])
-    p "===================="
-    p params
-    p "===================="
     respond_to do |format|
       format.json {render json: @goal}
     end

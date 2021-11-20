@@ -1,9 +1,10 @@
 <div class="card border-0">
   <h2 class ="title">目標</h2>
+  <%= render partial:'layouts/flash' %>
     <div class="goal">
       <h2 class="totalGoal">----/--/--までに<br>￥----------貯金</h2>
       <div class="d-flex justify-content-center">
-        <h3>￥----------円達成！</h3>
+        <%# <h3>￥----------円達成！</h3> %>
         <button type="button" class="btn btn-warning goalBtn" data-toggle="modal" data-target="#goalModal">
           目標設定
         </button>

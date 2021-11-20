@@ -9,17 +9,18 @@ class MoneysController < ApplicationController
   def create
     @money = current_user.money.new(money_params)
     if @money.save
-      flash[:success] = '登録しました'
+      flash[:success] = '登録完了'
       redirect_to new_user_money_path(current_user.id)
     else
       render 'new'
+      flash.now[:danger] = '登録できませんでした'
     end
   end
 
   def index
     @user = User.find_by(id: params[:user_id])
     thisMonth = Time.now.strftime("%Y-%m")
-    @moneys = @user.money.where("created_at LIKE ?" , "%#{thisMonth}%")
+    @moneys = @user.money.where("cast(created_at as TEXT) LIKE ?" , "%#{thisMonth}%")
     @incomes = @moneys.where("income > ?", 0)
     @expenses = @moneys.where("expense > ?", 0)
     # 給料合計
@@ -137,7 +138,7 @@ class MoneysController < ApplicationController
 
   def search
     user = User.find_by(id: params[:userId])
-    moneys = user.money.where("created_at LIKE ?" , "%#{params[:searchDate]}%")
+    moneys = user.money.where("cast(created_at as TEXT) LIKE ?" , "%#{params[:searchDate]}%")
     incomes = moneys.where("income > ?", 0)
     expenses = moneys.where("expense > ?", 0)
 
@@ -290,42 +291,42 @@ class MoneysController < ApplicationController
         searchDate = date.strftime("%Y-%m")
         labelDate = date.strftime("%Y/%m")
         gon.labels.push(labelDate)
-        gon.salaryVal.push(@money.where(income_category_id: 1).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
-        gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
-        gon.unCateIncomeVal.push(@money.where(income_category_id: 3).where("created_at LIKE ?", "#{searchDate}%").sum(:income))
-        gon.foodVal.push(@money.where(expense_category_id: 1).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.utilityVal.push(@money.where(expense_category_id: 2).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.phoneVal.push(@money.where(expense_category_id: 3).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.transportVal.push(@money.where(expense_category_id: 4).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.beautyVal.push(@money.where(expense_category_id: 5).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.medicalVal.push(@money.where(expense_category_id: 6).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.clothingVal.push(@money.where(expense_category_id: 7).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.dailyVal.push(@money.where(expense_category_id: 8).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.educationVal.push(@money.where(expense_category_id: 9).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.hobbyVal.push(@money.where(expense_category_id: 10).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.housingVal.push(@money.where(expense_category_id: 11).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
-        gon.unCateExpenseVal.push(@money.where(expense_category_id: 12).where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.salaryVal.push(@money.where(income_category_id: 1).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:income))
+        gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:income))
+        gon.unCateIncomeVal.push(@money.where(income_category_id: 3).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:income))
+        gon.foodVal.push(@money.where(expense_category_id: 1).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.utilityVal.push(@money.where(expense_category_id: 2).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.phoneVal.push(@money.where(expense_category_id: 3).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.transportVal.push(@money.where(expense_category_id: 4).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.beautyVal.push(@money.where(expense_category_id: 5).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.medicalVal.push(@money.where(expense_category_id: 6).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.clothingVal.push(@money.where(expense_category_id: 7).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.dailyVal.push(@money.where(expense_category_id: 8).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.educationVal.push(@money.where(expense_category_id: 9).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.hobbyVal.push(@money.where(expense_category_id: 10).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.housingVal.push(@money.where(expense_category_id: 11).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
+        gon.unCateExpenseVal.push(@money.where(expense_category_id: 12).where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
       end
   
       if startDay > lastDay
         lastMonth = Time.now.strftime("%Y-%m")
         labelLast = Time.now.strftime("%Y/%m")
         gon.labels.push(labelLast)      
-        gon.salaryVal.push(@money.where(income_category_id: 1).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
-        gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
-        gon.unCateIncomeVal.push(@money.where(income_category_id: 3).where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
-        gon.foodVal.push(@money.where(expense_category_id: 1).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.utilityVal.push(@money.where(expense_category_id: 2).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.phoneVal.push(@money.where(expense_category_id: 3).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.transportVal.push(@money.where(expense_category_id: 4).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.beautyVal.push(@money.where(expense_category_id: 5).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.medicalVal.push(@money.where(expense_category_id: 6).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.clothingVal.push(@money.where(expense_category_id: 7).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.dailyVal.push(@money.where(expense_category_id: 8).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.educationVal.push(@money.where(expense_category_id: 9).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.hobbyVal.push(@money.where(expense_category_id: 10).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.housingVal.push(@money.where(expense_category_id: 11).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
-        gon.unCateExpenseVal.push(@money.where(expense_category_id: 12).where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.salaryVal.push(@money.where(income_category_id: 1).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:income))
+        gon.sideIncomeVal.push(@money.where(income_category_id: 2).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:income))
+        gon.unCateIncomeVal.push(@money.where(income_category_id: 3).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:income))
+        gon.foodVal.push(@money.where(expense_category_id: 1).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.utilityVal.push(@money.where(expense_category_id: 2).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.phoneVal.push(@money.where(expense_category_id: 3).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.transportVal.push(@money.where(expense_category_id: 4).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.beautyVal.push(@money.where(expense_category_id: 5).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.medicalVal.push(@money.where(expense_category_id: 6).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.clothingVal.push(@money.where(expense_category_id: 7).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.dailyVal.push(@money.where(expense_category_id: 8).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.educationVal.push(@money.where(expense_category_id: 9).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.hobbyVal.push(@money.where(expense_category_id: 10).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.housingVal.push(@money.where(expense_category_id: 11).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
+        gon.unCateExpenseVal.push(@money.where(expense_category_id: 12).where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
       end
     end
 
@@ -349,14 +350,14 @@ class MoneysController < ApplicationController
       searchDate = date.strftime("%Y-%m")
       labelDate = date.strftime("%Y/%m")
       labels.push(labelDate)
-      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{searchDate}%").sum(:expense))
+      searchCateVal.push(searchCate.where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:expense))
     end
 
     if startDay > lastDay
       lastMonth = Time.now.strftime("%Y-%m")
       labelLast = Time.now.strftime("%Y/%m")
       labels.push(labelLast)      
-      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{lastMonth}%").sum(:expense))
+      searchCateVal.push(searchCate.where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:expense))
     end
 
     respond_to do |format|
@@ -382,14 +383,14 @@ class MoneysController < ApplicationController
       searchDate = date.strftime("%Y-%m")
       labelDate = date.strftime("%Y/%m")
       labels.push(labelDate)
-      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{searchDate}%").sum(:income))
+      searchCateVal.push(searchCate.where("cast(created_at as TEXT) LIKE ?", "#{searchDate}%").sum(:income))
     end
 
     if startDay > lastDay
       lastMonth = Time.now.strftime("%Y-%m")
       labelLast = Time.now.strftime("%Y/%m")
       labels.push(labelLast)      
-      searchCateVal.push(searchCate.where("created_at LIKE ?", "#{lastMonth}%").sum(:income))
+      searchCateVal.push(searchCate.where("cast(created_at as TEXT) LIKE ?", "#{lastMonth}%").sum(:income))
     end
 
     respond_to do |format|
@@ -404,27 +405,23 @@ class MoneysController < ApplicationController
   end
 
   def update
-    p "=================="
-    p params
-    p "===================="
     @user = User.find_by(id: current_user.id)
     @money = @user.money.find_by(id: money_params[:id])
-    p "=================="
-    p @money
-    p "===================="
     if params[:update] 
       if @money.update(money_params)
         flash[:success] = "更新完了"
         redirect_to user_moneys_path(@user)
       else
         render 'index'
+        flash.now[:danger] = "更新できませんでした"
       end
     elsif params[:destroy]
       if @money.delete
-        flash[:success] = "削除しました"
+        flash[:success] = "削除完了"
         redirect_to user_moneys_path(@user)
       else
         render 'index'
+        flash.now[:danger] = "削除できませんでした"
       end
     end
   end
