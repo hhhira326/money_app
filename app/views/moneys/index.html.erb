@@ -197,7 +197,7 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <%= form_for(:money, url: user_moneys_path) do |f| %>
+                      <%= form_for(:money, url: user_moneys_path, id: 'show-modal') do |f| %>
                         <ul>
                           <li><%= f.label :'金額'%>
                           <%= f.text_field :expense , data: { autonumeric: { aSign: '¥ ', mDec: 0 } },class:'text-right trMoney' %></li>

@@ -30,6 +30,7 @@
   }
 }
 
+
 .title {
   text-align: center;
   padding-bottom: 0.8rem;
@@ -37,11 +38,11 @@
   font-weight: bold;
 }
 
-.navbar-nav {
-   li {
-     margin-right: 20px;
-   }
- }
+#navbarNav {
+  ul li {
+    margin-right: 0.5rem;
+  }
+}
 
 .user-icon {
   border-radius: 50%;

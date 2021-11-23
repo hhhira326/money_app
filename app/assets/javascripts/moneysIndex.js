@@ -1,6 +1,7 @@
 // $(function() {
   $(document).on('turbolinks:load',(function(){
 
+
     // 履歴詳細モーダル
     let trId;
     let trDate;
@@ -28,6 +29,7 @@
       $('.trCate').val(trCateId);
       $('.trDate').val(trDate);
       $('.trDetail').val(trDetail);
+      if ($('.trId').val )
     });
 
     function expenseCate_check(cateName) {

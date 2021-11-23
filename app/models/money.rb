@@ -7,6 +7,7 @@ class Money < ApplicationRecord
 
   validates :income, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 1}, format: { with: /\A[0-9]+\z/ }, if: :expenseCheck
   validates :expense, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 1}, format: { with: /\A[0-9]+\z/ }, if: :incomeCheck
+  
 
   private
     def incomeCheck
