@@ -4,9 +4,9 @@ class GoalsController < ApplicationController
   def new
     @user = User.find_by(id: params[:user_id])
     @goal = @user.goals.new
-    @latest = @user.goals.order(created_at: :desc).find_by("goalSavings > ?", 0)
+    @latest = @user.goals.order(created_at: :desc).find_by("goal_savings > ?", 0)
     if @latest
-      @latestDay = @latest.goalDeadline.strftime("%Y/%m/%d")
+      @latestDay = @latest.goal_deadline.strftime("%Y/%m/%d")
     end
     @goalTable = @user.goals.order(deadline: :asc).where("savings > ?", 0)
     @hideTable = @goalTable.where(check: true)
@@ -47,7 +47,7 @@ class GoalsController < ApplicationController
 
   private
     def goals_params
-      params.require(:goals).permit(:goalSavings, :goalDeadline, :category, :way, :savings, :deadline, :check, :user_id, :created_at)
+      params.require(:goals).permit(:goal_savings, :goal_deadline, :category, :way, :savings, :deadline, :check, :user_id, :created_at)
     end
     def correct_user
       @user = User.find_by(id: params[:user_id])

@@ -20,8 +20,8 @@
             </div>
             <div class="goalModal-body py-2 mx-auto">
               <%= form_for(:goals, url: goal_path) do |f| %>
-                <%= f.date_field :goalDeadline, value:Time.now.strftime("%Y-%m-%d") %>までに
-                <%= f.number_field :goalSavings, style: 'width: 6em' %>円貯金！
+                <%= f.date_field :goal_deadline, value:Time.now.strftime("%Y-%m-%d") %>までに
+                <%= f.number_field :goal_savings, style: 'width: 6em' %>円貯金！
             </div>
             <div class="modal-footer">
                 <%= f.submit "登録", class:'btn btn-warning font-weight-bold py-2' %>

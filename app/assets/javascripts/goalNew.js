@@ -1,7 +1,7 @@
 $(function() {
 
   if (gon.latest) {
-    $('.totalGoal').html(`${gon.latestDay}までに<br>￥${gon.latest.goalSavings.toLocaleString()}貯金`);
+    $('.totalGoal').html(`${gon.latestDay}までに<br>￥${gon.latest.goal_savings.toLocaleString()}貯金`);
   }
   var $checkTr = $('.checkbox[value="true"]').parents('tr');
   let nearId = [];

@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2021_10_31_032645) do
   enable_extension "plpgsql"
 
   create_table "goals", force: :cascade do |t|
-    t.integer "goalSavings"
-    t.date "goalDeadline"
+    t.integer "goal_savings"
+    t.date "goal_deadline"
     t.string "category"
     t.string "way"
     t.integer "savings"

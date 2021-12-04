@@ -1,8 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  goalSavings: 1
-  goalDeadline: 2021-10-31
+  goal_savings: 1
+  goal_deadline: 2021-10-31
   category: MyString
   way: MyString
   savings: 1
@@ -11,8 +11,8 @@ one:
   boolean: MyString
 
 two:
-  goalSavings: 1
-  goalDeadline: 2021-10-31
+  goal_savings: 1
+  goal_deadline: 2021-10-31
   category: MyString
   way: MyString
   savings: 1

@@ -1,8 +1,8 @@
 class CreateGoals < ActiveRecord::Migration[5.2]
   def change
     create_table :goals do |t|
-      t.integer :goalSavings
-      t.date :goalDeadline
+      t.integer :goal_savings
+      t.date :goal_deadline
       t.string :category
       t.string :way
       t.integer :savings
